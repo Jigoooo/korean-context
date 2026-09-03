@@ -13,4 +13,10 @@ describe("repository contract", () => {
     expect(pkg.packageManager).toBe("pnpm@11.22.0");
     expect(pkg.engines.node).toBe(">=22.13");
   });
+
+  it("excludes nested Git worktrees from test discovery", () => {
+    const vitestConfig = readFileSync("vitest.config.ts", "utf8");
+
+    expect(vitestConfig).toContain('"**/.worktrees/**"');
+  });
 });
