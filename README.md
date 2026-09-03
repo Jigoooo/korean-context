@@ -6,6 +6,10 @@ Korean Context helps Codex write Korean commits, PRs, reviews, documentation, UI
 
 > v0.1 is a Codex-first prerelease. Explicit invocation is the most reliable path; implicit activation remains beta.
 
+## Roadmap
+
+Current implementation status, the active milestone, and handoff instructions for future sessions are maintained in [ROADMAP.md](ROADMAP.md).
+
 ## What it changes
 
 - 어색한 명사화와 기계적인 번역투를 줄입니다.

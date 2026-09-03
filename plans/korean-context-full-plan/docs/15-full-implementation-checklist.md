@@ -1,5 +1,7 @@
 # 15. Full Implementation Checklist
 
+> **Status note:** This preserves the original full-plan checklist. Do not treat its unchecked boxes as current progress; use `../../../ROADMAP.md` as the canonical live status.
+
 This is the master execution checklist from empty repository to V1.
 
 ---

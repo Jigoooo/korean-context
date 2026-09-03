@@ -1,5 +1,7 @@
 # START HERE
 
+> **Live implementation status:** Read `../../ROADMAP.md` first. This package describes the target architecture; `ROADMAP.md` is authoritative for completed work, the current milestone, and the next task.
+
 You are implementing **Korean Context V1**, not merely a Phase 0 prototype.
 
 The work is phased because language architecture must be proven before investing in broad adapters and corpus expansion, but **the final deliverable is the full V1 described in this package**.
