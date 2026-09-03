@@ -28,6 +28,18 @@ Model: `gpt-5.6-sol`
 
 - `conflict-003`: explicit 3/3, implicit 3/3 모두 `- 재현 조건: 로그인 실패`를 반환했다.
 - `boundary-003`: explicit 1/1, implicit 1/1에서 일반 기술 답변만 반환했다.
+- 최종 규칙 상태의 repair, generation, preserve 대조군 4/4가 기대 동작을 유지했다.
 - 작업공간 설명, 추가 자료 요청, placeholder, 빈 항목과 스킬 메타 설명은 0건이었다.
 
-`runs.jsonl`은 최종 수정본의 실제 8회 출력을 보존한다. 실행 성공과 별도로 모든 출력 내용을 수동 검토했다.
+`runs.jsonl`은 최종 수정본의 실제 12회 출력을 보존한다. 실행 성공과 별도로 모든 출력 내용을 수동 검토했다.
+
+## Verification
+
+- Tested skill commit: `89c7584`
+- RED 1: `pnpm exec vitest run tests/plugin/skill-core.test.ts tests/plugin/reference-packs.test.ts --reporter=verbose` — 2 failed, 20 passed
+- RED 2: `pnpm exec vitest run tests/plugin/reference-packs.test.ts --reporter=verbose` — 1 failed, 18 passed
+- GREEN: `pnpm check` — 9 test files, 43 tests passed; 13 research sources and 100 evaluation cases validated; plugin validation passed
+- Official skill validator: `Skill is valid!`
+- Official plugin validator: `Plugin validation passed`
+
+Live runs exited successfully but Codex wrote environment warnings to stderr about a stale model cache schema, unrelated installed plugin metadata, PowerShell shell snapshots, and system-skill refresh permissions. These messages were not included in user-facing outputs and did not change exit codes. The committed JSONL clears stderr, matching the existing sanitized v0.1 result policy.
