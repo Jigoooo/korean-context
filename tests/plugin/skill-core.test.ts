@@ -30,4 +30,19 @@ describe("Korean Context skill core", () => {
     }
     expect(skill).not.toContain("references/references/");
   });
+
+  it("keeps ordinary conversation free of skill metadata", () => {
+    const skill = readFileSync(`${skillRoot}/SKILL.md`, "utf8");
+    const boundary = readFileSync(
+      `${skillRoot}/references/core-artifact-boundary.md`,
+      "utf8",
+    );
+
+    expect(skill).toContain(
+      "스킬 이름, 활성화 여부, 적용하지 않은 이유를 언급하지 않는다.",
+    );
+    expect(boundary).toContain(
+      "스킬 이름, 활성화 여부, 적용하지 않은 이유를 언급하지 않는다.",
+    );
+  });
 });

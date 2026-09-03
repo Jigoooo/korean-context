@@ -7,7 +7,7 @@ description: Use when creating or editing persistent or publishable Korean artif
 
 Apply these steps only to the Korean artifact being created or edited.
 
-1. Confirm that the destination is persistent or publishable. If it is ordinary conversation, stop using this skill.
+1. Confirm that the destination is persistent or publishable. If it is ordinary conversation, stop using this skill. 평소처럼 직접 답하고 스킬 이름, 활성화 여부, 적용하지 않은 이유를 언급하지 않는다.
 2. Identify the surface and technical domain.
 3. Preserve explicit user instructions, existing artifact style, and project conventions in that order.
 4. Read `references/core-artifact-boundary.md` and the relevant `references/surface-*.md` file.
