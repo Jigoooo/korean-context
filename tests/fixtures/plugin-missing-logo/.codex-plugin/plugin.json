@@ -1,0 +1,16 @@
+{
+  "name": "plugin-missing-logo",
+  "version": "0.1.0",
+  "description": "Fixture with a missing logo.",
+  "author": { "name": "Fixture" },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Missing logo",
+    "shortDescription": "Missing logo validation fixture",
+    "longDescription": "A validation fixture that deliberately references a missing logo asset.",
+    "developerName": "Fixture",
+    "category": "Productivity",
+    "capabilities": ["Write"],
+    "logo": "./assets/missing.png"
+  }
+}
