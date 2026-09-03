@@ -26,6 +26,8 @@
       "이 PR 본문을 자연스러운 한국어로 작성해줘.",
       "이 UI 오류 문구를 사용자에게 자연스럽게 다듬어줘."
     ],
-    "brandColor": "#111827"
+    "brandColor": "#111827",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png"
   }
 }
