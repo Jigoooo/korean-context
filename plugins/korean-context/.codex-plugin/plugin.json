@@ -1,0 +1,31 @@
+{
+  "name": "korean-context",
+  "version": "0.1.0",
+  "description": "Write Korean software artifacts with context-appropriate wording, terminology, and register.",
+  "author": {
+    "name": "김지우",
+    "url": "https://github.com/Jigoooo"
+  },
+  "homepage": "https://github.com/Jigoooo/korean-context",
+  "repository": "https://github.com/Jigoooo/korean-context",
+  "license": "MIT",
+  "keywords": ["korean", "writing", "developer-tools", "localization"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Korean Context",
+    "shortDescription": "맥락에 맞는 자연스러운 한국어 산출물",
+    "longDescription": "커밋, PR, 리뷰, 문서, UI 등 AI가 만드는 한국어 산출물에 표면·분야·문체에 맞는 표현과 기술 용어를 적용합니다.",
+    "developerName": "김지우",
+    "category": "Productivity",
+    "capabilities": ["Write"],
+    "websiteURL": "https://github.com/Jigoooo/korean-context",
+    "privacyPolicyURL": "https://github.com/Jigoooo/korean-context/blob/main/PRIVACY.md",
+    "termsOfServiceURL": "https://github.com/Jigoooo/korean-context/blob/main/TERMS.md",
+    "defaultPrompt": [
+      "이 변경사항의 한국어 커밋 메시지를 작성해줘.",
+      "이 PR 본문을 자연스러운 한국어로 작성해줘.",
+      "이 UI 오류 문구를 사용자에게 자연스럽게 다듬어줘."
+    ],
+    "brandColor": "#111827"
+  }
+}
