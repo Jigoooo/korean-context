@@ -1,0 +1,8 @@
+interface:
+  display_name: "Korean Context"
+  short_description: "맥락에 맞는 자연스러운 한국어 산출물 작성"
+  brand_color: "#111827"
+  default_prompt: "Use $korean-context to draft a context-appropriate Korean software artifact."
+
+policy:
+  allow_implicit_invocation: true
