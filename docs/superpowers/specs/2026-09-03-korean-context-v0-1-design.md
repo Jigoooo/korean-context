@@ -273,7 +273,7 @@ repo marketplace는 `./plugins/korean-context`를 가리킨다. 로컬 시험에
 
 ## 7. 자동화와 CI
 
-개발 도구는 Node.js 20 이상, TypeScript, pnpm을 사용한다. 플러그인 자체는 런타임 코드를 실행하지 않는다.
+개발 도구는 pnpm 11.22의 `node:sqlite` 의존성을 충족하는 Node.js 22.13 이상, TypeScript, pnpm을 사용한다. CI는 Node.js 24를 사용한다. 플러그인 자체는 런타임 코드를 실행하지 않는다.
 
 CI는 Windows, macOS, Linux에서 다음을 수행한다.
 

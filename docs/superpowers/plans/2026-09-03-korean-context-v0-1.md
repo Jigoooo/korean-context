@@ -6,7 +6,7 @@
 
 **Architecture:** 저장소 루트는 평가 도구, 연구 근거, 문서, CI를 담당하고 배포 단위는 `plugins/korean-context` 아래에 격리한다. 언어 정책은 플러그인 내부의 단일 스킬과 얕은 참조 파일만을 원본으로 삼으며, TypeScript 도구는 매니페스트·평가 코퍼스·결과를 검증하되 플러그인 런타임에는 포함되지 않는다.
 
-**Tech Stack:** Node.js 20+, TypeScript, pnpm 11, Vitest, Zod, YAML, Execa, Python 3.12 plugin validators, Codex CLI 0.147+, GitHub CLI
+**Tech Stack:** Node.js 22.13+, TypeScript, pnpm 11, Vitest, Zod, YAML, Execa, Python 3.12 plugin validators, Codex CLI 0.147+, GitHub CLI
 
 **Spec:** `docs/superpowers/specs/2026-09-03-korean-context-v0-1-design.md`
 
@@ -74,7 +74,7 @@
   "private": true,
   "type": "module",
   "packageManager": "pnpm@11.22.0",
-  "engines": { "node": ">=20" },
+  "engines": { "node": ">=22.13" },
   "scripts": {
     "format": "prettier --write .",
     "format:check": "prettier --check .",
@@ -110,7 +110,7 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
 describe("repository contract", () => {
-  it("pins pnpm and supports Node 20 or newer", () => {
+  it("pins pnpm and supports the pnpm 11 Node floor", () => {
     const pkg = JSON.parse(readFileSync("package.json", "utf8")) as {
       packageManager: string;
       engines: { node: string };
@@ -118,7 +118,7 @@ describe("repository contract", () => {
     };
     expect(pkg.private).toBe(true);
     expect(pkg.packageManager).toBe("pnpm@11.22.0");
-    expect(pkg.engines.node).toBe(">=20");
+    expect(pkg.engines.node).toBe(">=22.13");
   });
 });
 ```
@@ -843,7 +843,7 @@ jobs:
           version: 11.22.0
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm check
