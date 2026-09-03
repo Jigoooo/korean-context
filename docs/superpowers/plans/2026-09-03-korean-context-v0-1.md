@@ -52,6 +52,7 @@
 - Create: `.editorconfig`
 - Create: `.prettierignore`
 - Create: `package.json`
+- Create: `pnpm-workspace.yaml`
 - Create: `tsconfig.json`
 - Create: `eslint.config.js`
 - Create: `vitest.config.ts`
@@ -97,10 +98,10 @@
 - [ ] **Step 2: 개발 의존성 설치**
 
 ```powershell
-pnpm add -D typescript tsx vitest eslint @eslint/js typescript-eslint prettier zod yaml execa @types/node
+pnpm add -D typescript@~6.0.3 tsx vitest eslint @eslint/js typescript-eslint prettier zod yaml execa @types/node
 ```
 
-Expected: `pnpm-lock.yaml`이 생성되고 오류 없이 끝난다.
+Expected: `pnpm-lock.yaml`이 생성되고 `pnpm-workspace.yaml`의 `allowBuilds.esbuild`만 `true`로 승인된 상태에서 오류 없이 끝난다.
 
 - [ ] **Step 3: 저장소 계약 테스트 작성**
 
@@ -136,7 +137,7 @@ Expected: 네 명령이 모두 exit code 0으로 끝난다.
 - [ ] **Step 5: 부트스트랩 커밋**
 
 ```powershell
-git add .gitignore .gitattributes .editorconfig .prettierignore package.json pnpm-lock.yaml tsconfig.json eslint.config.js vitest.config.ts tests/repository-layout.test.ts plans/korean-context-full-plan
+git add .gitignore .gitattributes .editorconfig .prettierignore package.json pnpm-lock.yaml pnpm-workspace.yaml tsconfig.json eslint.config.js vitest.config.ts tests/repository-layout.test.ts plans/korean-context-full-plan
 git commit -m "chore(repo): v0.1 개발 환경 구성"
 ```
 
