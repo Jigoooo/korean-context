@@ -1,0 +1,21 @@
+{
+  "checkedAt": "2026-09-03",
+  "codexVersion": "codex-cli 0.147.0",
+  "marketplace": "personal",
+  "pluginId": "korean-context@personal",
+  "releaseVersion": "0.1.0",
+  "cachebusterVersionTested": "0.1.0+codex.20260903095806",
+  "checks": {
+    "marketplaceAdd": "passed",
+    "initialInstall": "passed",
+    "sameSourceReinstall": "passed",
+    "cachebusterUpdate": "passed",
+    "remove": "passed",
+    "absentAfterRemove": "passed",
+    "finalReinstall": "passed"
+  },
+  "installedPluginCountBefore": 15,
+  "installedPluginCountAfter": 15,
+  "finalEnabled": true,
+  "source": "plugins/korean-context"
+}
