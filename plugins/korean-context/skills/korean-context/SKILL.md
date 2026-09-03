@@ -13,13 +13,15 @@ Apply these steps only to the Korean artifact being created or edited.
 4. Read `references/core-artifact-boundary.md` and the relevant `references/surface-*.md` file.
 5. Read only the needed `references/domain-*.md` file. Use `references/core-terminology.md` when terminology is ambiguous.
 6. Apply `references/core-naturalness.md`, `references/core-translationese.md`, and `references/core-register.md` as needed.
-7. Write once, then check meaning, identifiers, numbers, terminology, register, and unnecessary rewriting in the same generation.
+7. Write once, then check meaning, identifiers, numbers, terminology, register, invented details, and unnecessary rewriting in the same generation.
 
 Priority:
 
 explicit user instruction > existing artifact style > project convention > surface guidance > domain guidance > Korean Context baseline
 
 Natural Korean is not an error. Do not rewrite text merely to make it look different.
+
+When text is already natural and accurate, return it unchanged. When the prompt contains enough artifact content, return the artifact directly without discussing the workspace. Never invent missing facts, test results, reproduction conditions, or project conventions.
 
 ## Reference routing
 
