@@ -24,7 +24,7 @@
   decision: adapt
   generalizedRule: 산출물은 처음부터 자연스럽게 생성하되 적용 경계를 저장되거나 게시될 텍스트로 좁혀 일반 대화 오염을 막는다.
   exceptions: [사용자가 일반 대화에서도 특정 문체를 명시하면 그 지시를 따른다.]
-  evalIds: [generation-001, boundary-001]
+  evalIds: [boundary-001, boundary-002]
 
 - id: engineering-line-writing-001
   url: https://engineering.linecorp.com/ko/blog/why-are-engineers-so-bad-at-writing/
@@ -53,7 +53,7 @@
   generalizedRule: 테스트·릴리스 산출물은 무엇을 확인했고 어떤 위험을 남겼는지 관찰 가능한 정보로 작성한다.
   exceptions:
     [UI 레이블처럼 공간이 제한된 표면에는 상세 검증 근거를 넣지 않는다.]
-  evalIds: [generation-003, repair-002]
+  evalIds: [generation-003, repair-003]
 
 - id: engineering-kakao-review-001
   url: https://tech.kakao.com/posts/501
@@ -67,7 +67,7 @@
   decision: reuse
   generalizedRule: 리뷰 코멘트는 사람을 평가하지 말고 코드의 동작, 영향, 근거, 제안을 전문적인 해요체로 설명한다.
   exceptions: [저장소에 확립된 다른 리뷰 문체가 있으면 그 문체를 유지한다.]
-  evalIds: [generation-004, conflict-002]
+  evalIds: [generation-006, conflict-004]
 
 - id: engineering-toss-ssot-001
   url: https://toss.tech/article/technical-writing-1
@@ -101,7 +101,7 @@
     [
       보안상 세부 원인을 노출하면 안 되는 오류는 안전한 범위의 다음 행동만 안내한다.,
     ]
-  evalIds: [repair-003, generation-005]
+  evalIds: [repair-031, generation-011, transfer-008]
 
 - id: ux-toss-system-001
   url: https://toss.tech/article/1st_uxwriter
@@ -131,7 +131,7 @@
   generalizedRule: 취약점 산출물에서는 CVE·제품·버전·점수를 그대로 보존하고 취약점 유형과 영향을 분리해 기술한다.
   exceptions:
     [CVE가 부여되지 않은 내부 취약점에는 존재하지 않는 식별자를 만들지 않는다.]
-  evalIds: [repair-004, preserve-003]
+  evalIds: [repair-040, preserve-009, transfer-009]
 
 - id: security-kisa-openclaw-001
   url: https://www.krcert.or.kr/kr/bbs/view.do?bbsId=B0000133&categoryCode=&menuNo=205020&nttId=72020&pageIndex=1&searchCnd=&searchWrd=
@@ -148,7 +148,7 @@
     [
       공격 재현 보고서처럼 사용자가 상세 구조를 요구하면 검증된 범위에서 기술 수준을 높인다.,
     ]
-  evalIds: [generation-006, conflict-004]
+  evalIds: [repair-036, generation-013, boundary-007]
 
 - id: security-kisa-container-001
   url: https://www.boho.or.kr/kr/bbs/view.do?bbsId=B0000133&categoryCode=&menuNo=205020&nttId=71325&pageIndex=1&searchCnd=&searchWrd=
@@ -163,7 +163,7 @@
   generalizedRule: 인프라 보안 용어는 통용되는 영문과 한국어를 맥락에 따라 병기하되 프로젝트에서 쓰는 제품명과 버전 표기는 바꾸지 않는다.
   exceptions:
     [독자가 이미 용어를 공유하는 짧은 변경 기록에서는 반복 병기를 생략한다.]
-  evalIds: [repair-005, transfer-004]
+  evalIds: [repair-028, generation-010, preserve-006, transfer-006]
 
 - id: security-asec-lateral-001
   url: https://asec.ahnlab.com/ko/58882/
@@ -177,7 +177,7 @@
   decision: reuse
   generalizedRule: 공격 단계 용어는 국내 실무에서 통용되는 한국어와 ATT&CK 영문을 필요할 때 병기하고 문자 그대로 새 번역을 만들지 않는다.
   exceptions: [프로젝트가 ATT&CK 영문 tactic 이름만 쓰면 기존 표기를 유지한다.]
-  evalIds: [repair-006, preserve-004, transfer-005]
+  evalIds: [repair-043, generation-015, preserve-010, transfer-010]
 
 - id: security-asec-play-001
   url: https://asec.ahnlab.com/ko/85444/
@@ -194,4 +194,4 @@
     [
       일반 사용자용 알림에서는 ATT&CK 분류보다 이해 가능한 영향과 대응을 우선한다.,
     ]
-  evalIds: [generation-007, conflict-005]
+  evalIds: [repair-032, repair-044, conflict-007, boundary-008]
