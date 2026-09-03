@@ -1,5 +1,6 @@
 plans/
 evals/results/
+graphify-out/
 node_modules/
 coverage/
 dist/
