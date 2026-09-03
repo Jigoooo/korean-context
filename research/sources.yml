@@ -1,0 +1,197 @@
+- id: existing-humanize-001
+  url: local:C:/Users/PC/.codex/skills/humanize-korean/SKILL.md
+  checkedAt: "2026-09-03"
+  category: existing-skill
+  originalLanguage: ko
+  authorType: community
+  surface: [docs, review]
+  domain: [software]
+  finding: 의미·수치·고유명사·코드와 기존 문체를 보호하고 이미 자연스러운 문장은 과도하게 고치지 않는 안전장치가 유용하다.
+  decision: adapt
+  generalizedRule: 보호 대상과 기존 문체를 먼저 고정하되 변경률 점수나 전체 문서 재작성 절차는 기본 생성 경로에서 사용하지 않는다.
+  exceptions: [명시적인 문체 변환 요청은 기존 문체 보존보다 우선한다.]
+  evalIds: [repair-001, preserve-001, conflict-001]
+
+- id: existing-fluent-001
+  url: https://github.com/snflkd/fluent-korean/blob/main/README.md
+  checkedAt: "2026-09-03"
+  category: existing-skill
+  originalLanguage: ko
+  authorType: community
+  surface: [docs, conversation]
+  domain: [software]
+  finding: 사후 윤문보다 생성 전에 의미 손실 없는 명확한 한국어를 규율하는 접근과 일반 대화까지 바꾸는 output style의 위험을 함께 보여 준다.
+  decision: adapt
+  generalizedRule: 산출물은 처음부터 자연스럽게 생성하되 적용 경계를 저장되거나 게시될 텍스트로 좁혀 일반 대화 오염을 막는다.
+  exceptions: [사용자가 일반 대화에서도 특정 문체를 명시하면 그 지시를 따른다.]
+  evalIds: [generation-001, boundary-001]
+
+- id: engineering-line-writing-001
+  url: https://engineering.linecorp.com/ko/blog/why-are-engineers-so-bad-at-writing/
+  checkedAt: "2026-09-03"
+  category: engineering
+  originalLanguage: ko
+  authorType: practitioner
+  surface: [docs]
+  domain: [software]
+  finding: 기술 문서는 먼저 목차와 논리 구조를 잡고 독자가 필요한 정보를 빠르게 찾게 해야 하며 문장 표현과 기술 검토가 모두 필요하다.
+  decision: reuse
+  generalizedRule: 문서 표면에서는 독자의 과업과 정보 구조를 먼저 정하고 자연스러운 문장만으로 기술적 빈틈을 가리지 않는다.
+  exceptions: [짧은 코드 주석에는 문서 수준의 목차 구조를 요구하지 않는다.]
+  evalIds: [generation-002, transfer-001]
+
+- id: engineering-toss-qa-001
+  url: https://toss.tech/article/50893
+  checkedAt: "2026-09-03"
+  category: engineering
+  originalLanguage: ko
+  authorType: practitioner
+  surface: [docs, release]
+  domain: [software]
+  finding: 테스트와 릴리스 글은 변경 영향, 확인 범위, 판단 근거를 구체적인 동사와 수치로 설명하며 추상적인 품질 주장만 반복하지 않는다.
+  decision: reuse
+  generalizedRule: 테스트·릴리스 산출물은 무엇을 확인했고 어떤 위험을 남겼는지 관찰 가능한 정보로 작성한다.
+  exceptions:
+    [UI 레이블처럼 공간이 제한된 표면에는 상세 검증 근거를 넣지 않는다.]
+  evalIds: [generation-003, repair-002]
+
+- id: engineering-kakao-review-001
+  url: https://tech.kakao.com/posts/501
+  checkedAt: "2026-09-03"
+  category: engineering
+  originalLanguage: ko
+  authorType: practitioner
+  surface: [review, pr]
+  domain: [frontend]
+  finding: 코드 리뷰는 사람의 능력을 평가하는 보고서가 아니라 더 나은 결과물을 함께 만들기 위한 협업 행위로 서술된다.
+  decision: reuse
+  generalizedRule: 리뷰 코멘트는 사람을 평가하지 말고 코드의 동작, 영향, 근거, 제안을 전문적인 해요체로 설명한다.
+  exceptions: [저장소에 확립된 다른 리뷰 문체가 있으면 그 문체를 유지한다.]
+  evalIds: [generation-004, conflict-002]
+
+- id: engineering-toss-ssot-001
+  url: https://toss.tech/article/technical-writing-1
+  checkedAt: "2026-09-03"
+  category: engineering
+  originalLanguage: ko
+  authorType: practitioner
+  surface: [docs]
+  domain: [software]
+  finding: 기술 문서의 목표는 글을 꾸미는 것이 아니라 독자가 문제를 해결하게 돕는 것이며 신뢰할 수 있는 단일 정보 원본이 중요하다.
+  decision: reuse
+  generalizedRule: 언어 정책은 단일 원본에서 관리하고 문서 표현은 독자의 다음 행동과 문제 해결을 우선한다.
+  exceptions:
+    [
+      법적 고지처럼 정확한 정형 표현이 필요한 문서는 행동 중심 표현만 강제하지 않는다.,
+    ]
+  evalIds: [transfer-002, preserve-002]
+
+- id: ux-toss-principles-001
+  url: https://toss.tech/article/21022
+  checkedAt: "2026-09-03"
+  category: ux
+  originalLanguage: ko
+  authorType: practitioner
+  surface: [ui, error]
+  domain: [frontend]
+  finding: UI 문구는 어렵거나 모호한 단어를 줄이고 한 화면에서 당장 일어날 일과 사용자가 얻는 값을 이해하기 쉽게 알려 준다.
+  decision: reuse
+  generalizedRule: UI와 오류 문구는 사용자의 현재 맥락, 결과, 가능한 다음 행동을 짧고 직접적인 표현으로 제공한다.
+  exceptions:
+    [
+      보안상 세부 원인을 노출하면 안 되는 오류는 안전한 범위의 다음 행동만 안내한다.,
+    ]
+  evalIds: [repair-003, generation-005]
+
+- id: ux-toss-system-001
+  url: https://toss.tech/article/1st_uxwriter
+  checkedAt: "2026-09-03"
+  category: ux
+  originalLanguage: ko
+  authorType: practitioner
+  surface: [ui, docs]
+  domain: [frontend]
+  finding: 개별 문구를 고치는 것만으로는 일관된 품질을 만들 수 없고 팀이 공유할 원칙과 좁은 화면 제약을 함께 고려해야 한다.
+  decision: reuse
+  generalizedRule: 표면별 길이와 정보량을 구분하고 공통 원칙은 공유하되 모든 산출물을 같은 문체와 길이로 만들지 않는다.
+  exceptions:
+    [기존 제품 보이스와 디자인 시스템 문구가 있으면 그것이 기본값보다 우선한다.]
+  evalIds: [conflict-003, transfer-003]
+
+- id: security-kisa-vulnerability-001
+  url: https://boho.or.kr/kr/bbs/list.do?bbsId=B0000302&menuNo=205023
+  checkedAt: "2026-09-03"
+  category: security
+  originalLanguage: ko
+  authorType: official-org
+  surface: [issue, release]
+  domain: [security-vulnerability]
+  finding: 국내 공식 취약점 목록은 CVE 식별자, 제품, 취약점 유형, 심각도와 CVSS를 보존하면서 핵심 영향을 짧은 명사구로 표현한다.
+  decision: reuse
+  generalizedRule: 취약점 산출물에서는 CVE·제품·버전·점수를 그대로 보존하고 취약점 유형과 영향을 분리해 기술한다.
+  exceptions:
+    [CVE가 부여되지 않은 내부 취약점에는 존재하지 않는 식별자를 만들지 않는다.]
+  evalIds: [repair-004, preserve-003]
+
+- id: security-kisa-openclaw-001
+  url: https://www.krcert.or.kr/kr/bbs/view.do?bbsId=B0000133&categoryCode=&menuNo=205020&nttId=72020&pageIndex=1&searchCnd=&searchWrd=
+  checkedAt: "2026-09-03"
+  category: security
+  originalLanguage: ko
+  authorType: official-org
+  surface: [issue, release]
+  domain: [security-appsec]
+  finding: 보안 권고는 개요, 취약점 설명, 영향받는 버전, 해결 방안과 참고 근거를 구분하고 영문 취약점 유형과 CVE를 정확히 유지한다.
+  decision: reuse
+  generalizedRule: 보안 권고는 사실·영향·대응을 구분하고 확인되지 않은 원인이나 공격 가능성을 단정적으로 추가하지 않는다.
+  exceptions:
+    [
+      공격 재현 보고서처럼 사용자가 상세 구조를 요구하면 검증된 범위에서 기술 수준을 높인다.,
+    ]
+  evalIds: [generation-006, conflict-004]
+
+- id: security-kisa-container-001
+  url: https://www.boho.or.kr/kr/bbs/view.do?bbsId=B0000133&categoryCode=&menuNo=205020&nttId=71325&pageIndex=1&searchCnd=&searchWrd=
+  checkedAt: "2026-09-03"
+  category: security
+  originalLanguage: ko
+  authorType: official-org
+  surface: [release, docs]
+  domain: [infra]
+  finding: 컨테이너 보안 권고는 runC·BuildKit 같은 제품명과 File Descriptor·Race Condition 같은 용어를 첫 문맥에서 병기하고 버전 범위를 표로 구분한다.
+  decision: adapt
+  generalizedRule: 인프라 보안 용어는 통용되는 영문과 한국어를 맥락에 따라 병기하되 프로젝트에서 쓰는 제품명과 버전 표기는 바꾸지 않는다.
+  exceptions:
+    [독자가 이미 용어를 공유하는 짧은 변경 기록에서는 반복 병기를 생략한다.]
+  evalIds: [repair-005, transfer-004]
+
+- id: security-asec-lateral-001
+  url: https://asec.ahnlab.com/ko/58882/
+  checkedAt: "2026-09-03"
+  category: security
+  originalLanguage: ko
+  authorType: vendor
+  surface: [docs, issue]
+  domain: [security-pentest-redteam]
+  finding: 국내 위협 분석에서는 Lateral Movement를 측면 이동으로 병기하고 비컨, C2, 내부망 같은 실무 용어를 문맥에 맞게 함께 사용한다.
+  decision: reuse
+  generalizedRule: 공격 단계 용어는 국내 실무에서 통용되는 한국어와 ATT&CK 영문을 필요할 때 병기하고 문자 그대로 새 번역을 만들지 않는다.
+  exceptions: [프로젝트가 ATT&CK 영문 tactic 이름만 쓰면 기존 표기를 유지한다.]
+  evalIds: [repair-006, preserve-004, transfer-005]
+
+- id: security-asec-play-001
+  url: https://asec.ahnlab.com/ko/85444/
+  checkedAt: "2026-09-03"
+  category: security
+  originalLanguage: ko
+  authorType: vendor
+  surface: [docs, release]
+  domain: [security-pentest-redteam]
+  finding: 실제 EDR 분석은 Credential Access, Command and Control, Lateral Movement를 영문 tactic과 한국어 설명으로 연결하고 도구명과 행위를 구분한다.
+  decision: adapt
+  generalizedRule: 보안 산출물은 tactic, technique, 도구, 관찰된 행위를 서로 바꾸어 쓰지 않고 필요한 경우 영문 분류명을 보존한다.
+  exceptions:
+    [
+      일반 사용자용 알림에서는 ATT&CK 분류보다 이해 가능한 영향과 대응을 우선한다.,
+    ]
+  evalIds: [generation-007, conflict-005]
