@@ -490,7 +490,7 @@ git commit -m "test(eval): Codex v0.1 기준선 기록"
 `codex plugin marketplace list --json`으로 이름 충돌을 확인한다. 현재 `personal` 이름이 비어 있으므로 기본 이름을 사용한다.
 
 ```powershell
-python C:\Users\PC\.codex\skills\.system\plugin-creator\scripts\create_basic_plugin.py korean-context --path plugins --marketplace-path .agents/plugins/marketplace.json --with-skills --with-assets --with-marketplace
+python <codex-home>/skills/.system/plugin-creator/scripts/create_basic_plugin.py korean-context --path plugins --marketplace-path .agents/plugins/marketplace.json --with-skills --with-assets --with-marketplace
 ```
 
 Expected: plugin 폴더와 marketplace가 생기고 source path가 `./plugins/korean-context`다.
@@ -561,7 +561,7 @@ Expected: scaffold 기본값 때문에 처음에는 FAIL한다.
 - [ ] **Step 5: 자산 생성, 검증, 커밋**
 
 ```powershell
-python C:\Users\PC\.codex\skills\.system\plugin-creator\scripts\validate_plugin.py plugins/korean-context
+python <codex-home>/skills/.system/plugin-creator/scripts/validate_plugin.py plugins/korean-context
 pnpm vitest run tests/plugin/manifest.test.ts
 git add .agents/plugins/marketplace.json plugins/korean-context tests/plugin/manifest.test.ts
 git commit -m "feat(plugin): Korean Context 플러그인 골격 추가"
@@ -645,7 +645,7 @@ Natural Korean is not an error. Do not rewrite text merely to make it look diffe
 - [ ] **Step 4: 스킬 검증과 커밋**
 
 ```powershell
-python C:\Users\PC\.codex\skills\.system\skill-creator\scripts\quick_validate.py plugins/korean-context/skills/korean-context
+python <codex-home>/skills/.system/skill-creator/scripts/quick_validate.py plugins/korean-context/skills/korean-context
 pnpm vitest run tests/plugin/skill-core.test.ts
 git add plugins/korean-context/skills/korean-context tests/plugin/skill-core.test.ts
 git commit -m "feat(skill): 산출물 경계와 핵심 한국어 정책 구현"
@@ -853,8 +853,8 @@ jobs:
 
 ```powershell
 pnpm check
-python C:\Users\PC\.codex\skills\.system\plugin-creator\scripts\validate_plugin.py plugins/korean-context
-python C:\Users\PC\.codex\skills\.system\skill-creator\scripts\quick_validate.py plugins/korean-context/skills/korean-context
+python <codex-home>/skills/.system/plugin-creator/scripts/validate_plugin.py plugins/korean-context
+python <codex-home>/skills/.system/skill-creator/scripts/quick_validate.py plugins/korean-context/skills/korean-context
 git diff --check
 git add src/plugin tests/plugin README.md CONTRIBUTING.md SECURITY.md PRIVACY.md TERMS.md CHANGELOG.md docs/architecture.md docs/support-matrix.md docs/releases/v0.1.0.md .github/workflows/ci.yml
 git commit -m "docs(release): v0.1 공개 문서와 CI 구성"
@@ -884,7 +884,7 @@ Korean Context와 같은 이름의 기존 항목을 확인하고 다른 항목�
 - [ ] **Step 2: 저장소 marketplace 등록**
 
 ```powershell
-codex plugin marketplace add C:\workspace\korean-context --json
+codex plugin marketplace add <repository-root> --json
 codex plugin marketplace list --json
 ```
 
@@ -903,7 +903,7 @@ Expected: 설치 목록에 Korean Context가 있고 두 번째 실행이 다른 
 - [ ] **Step 4: cachebuster 갱신**
 
 ```powershell
-python C:\Users\PC\.codex\skills\.system\plugin-creator\scripts\update_plugin_cachebuster.py plugins/korean-context
+python <codex-home>/skills/.system/plugin-creator/scripts/update_plugin_cachebuster.py plugins/korean-context
 codex plugin add korean-context@personal --json
 codex plugin list --json
 ```
@@ -982,8 +982,8 @@ Expected: technical corruption 0, severe terminology error 0, boundary violation
 
 ```powershell
 pnpm check
-python C:\Users\PC\.codex\skills\.system\plugin-creator\scripts\validate_plugin.py plugins/korean-context
-python C:\Users\PC\.codex\skills\.system\skill-creator\scripts\quick_validate.py plugins/korean-context/skills/korean-context
+python <codex-home>/skills/.system/plugin-creator/scripts/validate_plugin.py plugins/korean-context
+python <codex-home>/skills/.system/skill-creator/scripts/quick_validate.py plugins/korean-context/skills/korean-context
 git diff --check
 git status --short
 git add evals/results/v0.1 plugins/korean-context/skills evals/cases

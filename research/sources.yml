@@ -1,5 +1,5 @@
 - id: existing-humanize-001
-  url: local:C:/Users/PC/.codex/skills/humanize-korean/SKILL.md
+  url: local:humanize-korean/SKILL.md
   checkedAt: "2026-09-03"
   category: existing-skill
   originalLanguage: ko
