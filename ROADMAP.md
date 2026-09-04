@@ -6,11 +6,11 @@
 
 **Current milestone:** v0.2 — Offen-based real-world quality validation
 
-**Detailed progress:** v0.2 implementation tasks 6/12 complete; Tasks 7–12 remain.
+**Detailed progress:** v0.2 implementation tasks 7/12 complete; Tasks 8–12 remain.
 
 **V1 outlook:** Milestone 0 is complete, Milestone 1 is in progress, and Milestones 2–5 remain.
 
-**Next task:** Execute Task 7 in `docs/superpowers/plans/2026-09-04-korean-context-v0-2.md`: author the 20 repair and 10 preserve cases.
+**Next task:** Execute Task 8 in `docs/superpowers/plans/2026-09-04-korean-context-v0-2.md`: author project-conflict, long-artifact, format, and boundary cases.
 
 **V1 supported agents:** Codex and Claude Code only
 
@@ -91,7 +91,7 @@ Before session end:
 - [ ] Convert observed UI, comment, commit, PR, and documentation problems into minimal anonymized fixtures.
 - [ ] Add conflicts covering project-approved terms such as `위젯`, `배치`, `칸`, and `서랍`.
 - [ ] Add long artifacts containing identifiers, numbers, keyboard keys, and mixed Korean/English terminology.
-- [ ] Add natural Korean controls that must remain unchanged.
+- [x] Add natural Korean controls that must remain unchanged.
 - [ ] Verify that no private source, secret, customer data, or excessive copied context is committed.
 
 ### 1.3 Comparative evaluation
@@ -191,6 +191,8 @@ git rev-list --left-right --count main...origin/main
 ```
 
 ## Session log
+
+- 2026-09-04 — Completed v0.2 Task 7 on `feat/v0.2-eval-foundation`: added 20 anonymized-derived repair cases across UI, error, comment, commit, PR, review, and docs surfaces; added 10 synthetic exact-output preservation controls and the minimal synthetic workspace README. Eight repair cases use three attempts. Verified 15 focused data-pack and privacy tests, then passed the full check with 158 tests. Next work is Task 8.
 
 - 2026-09-04 — Completed v0.2 Task 6 on `feat/v0.2-eval-foundation`: added strict v0.2 manual scores, complete-attempt and configuration gates, v0.1 regression enforcement, explicit-only quality thresholds, hard-failure variance, score JSONL loading, and the score CLI. Updated the rubric with boolean, gold issue, blind-review, and second-review rules. Verified 28 focused v0.2/v0.1 score tests, then passed the full check with 153 tests. Next work is Task 7.
 

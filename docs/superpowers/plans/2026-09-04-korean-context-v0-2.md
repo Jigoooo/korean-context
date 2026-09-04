@@ -937,7 +937,7 @@ git commit -m "feat(eval): v0.2 릴리스 게이트 추가"
 - Consumes: v0.2 schema, loader, privacy validator, and existing research source IDs.
 - Produces: 30 of the 60 public cases and 8 of the 20 repeated cases.
 
-- [ ] **Step 1: Write failing partial-pack tests**
+- [x] **Step 1: Write failing partial-pack tests**
 
 Create `tests/eval/v02-data-pack.test.ts` and load `repair.jsonl` and `preserve.jsonl` with `loadV02CaseFile()`. Assert counts 20 and 10, eight repeated repair cases, unique IDs, `privacyReviewed: true`, and valid research source links.
 
@@ -947,14 +947,14 @@ expect(preserve).toHaveLength(10);
 expect(repair.filter((item) => item.repeatCount === 3)).toHaveLength(8);
 ```
 
-- [ ] **Step 2: Run the partial-pack test and confirm missing-file failure**
+- [x] **Step 2: Run the partial-pack test and confirm missing-file failure**
 
 ```powershell
 pnpm vitest run tests/eval/v02-data-pack.test.ts
 ```
 
 Expected: FAIL because the two data files do not exist.
-- [ ] **Step 3: Write the exact repair matrix**
+- [x] **Step 3: Write the exact repair matrix**
 
 Create 20 `real-world-repair` cases:
 
@@ -967,7 +967,7 @@ Create 20 `real-world-repair` cases:
 | `v02-real-world-repair-019..020` | 2 | docs: version rows and recent result ordering |
 
 Set `repeatCount: 3` on cases 001, 004, 007, 010, 013, 015, 017, and 019. All other repair cases use 1.
-- [ ] **Step 4: Write the exact preserve matrix**
+- [x] **Step 4: Write the exact preserve matrix**
 
 Create 10 natural inputs that must remain unchanged:
 
@@ -982,11 +982,11 @@ Create 10 natural inputs that must remain unchanged:
 
 Every preserve case uses `requiredFormat: ["exact-output"]`, `repeatCount: 1`, and a `requiredSubstrings` entry containing the full original artifact. The prompt requests review and explicitly permits an unchanged answer when no objective problem exists. Use `ux-toss-principles-001`, `engineering-line-writing-001`, or the most relevant existing source ID.
 
-- [ ] **Step 5: Add the minimal public workspace README**
+- [x] **Step 5: Add the minimal public workspace README**
 
 State that every file is synthetic, uses `<workspace>` for paths, contains no production code, and exists only to provide stable evaluation context.
 
-- [ ] **Step 6: Run focused validation**
+- [x] **Step 6: Run focused validation**
 
 ```powershell
 pnpm vitest run tests/eval/v02-data-pack.test.ts tests/eval/privacy.test.ts
@@ -995,10 +995,10 @@ pnpm typecheck
 
 Expected: both partial files pass schema, evidence-link, repeat-count, and privacy checks. Full suite validation starts only after Task 8 creates the manifest and remaining files.
 
-- [ ] **Step 7: Update the roadmap and commit**
+- [x] **Step 7: Update the roadmap and commit**
 
 ```powershell
-git add evals/cases/v0.2/repair.jsonl evals/cases/v0.2/preserve.jsonl evals/fixtures/v0.2/anonymized-workspace/README.md tests/eval/v02-data-pack.test.ts ROADMAP.md
+git add evals/cases/v0.2/repair.jsonl evals/cases/v0.2/preserve.jsonl evals/fixtures/v0.2/anonymized-workspace/README.md tests/eval/v02-data-pack.test.ts docs/superpowers/plans/2026-09-04-korean-context-v0-2.md ROADMAP.md
 git commit -m "test(eval): 실전 교정과 보존 사례 추가"
 ```
 ---
