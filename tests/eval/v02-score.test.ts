@@ -64,6 +64,7 @@ const runFor = (
   reasoningEffort: "xhigh",
   pluginVersion: mode === "explicit" ? "0.2.0-rc.1" : null,
   fixtureHash,
+  memoryIsolation: "disabled",
   promptHash,
   exitCode: 0,
   output: "결과",
@@ -121,6 +122,7 @@ const legacyRun = (index: number): V02EvalRun => ({
   reasoningEffort: "xhigh",
   pluginVersion: "0.2.0-rc.1",
   fixtureHash: legacyFixtureHash,
+  memoryIsolation: "disabled",
   promptHash,
   exitCode: 0,
   output: "결과",
@@ -257,6 +259,18 @@ describe("v0.2 release score and gate", () => {
       ...run,
       model: "other-model",
     }));
+
+    expect(evaluateV02ReleaseGate(input).reasons).toContain(
+      "mixed-configuration",
+    );
+  });
+
+  it("rejects mixed memory-isolation settings", () => {
+    const input = completeGateInput();
+    input.explicitRuns[0] = {
+      ...(input.explicitRuns[0] as V02EvalRun),
+      memoryIsolation: "inherit" as "disabled",
+    };
 
     expect(evaluateV02ReleaseGate(input).reasons).toContain(
       "mixed-configuration",

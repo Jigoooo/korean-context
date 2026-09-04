@@ -25,6 +25,7 @@ export type CodexProcessRequest = {
   prompt: string;
   model: string;
   reasoningEffort?: string;
+  memoryIsolation?: "disabled";
   fixtureDirectory: string;
   timeoutMs: number;
 };
@@ -120,6 +121,14 @@ export async function executeCodexPrompt(
   ];
   if (request.reasoningEffort) {
     args.push("-c", `model_reasoning_effort=${request.reasoningEffort}`);
+  }
+  if (request.memoryIsolation === "disabled") {
+    args.push(
+      "-c",
+      "memories.use_memories=false",
+      "-c",
+      "memories.generate_memories=false",
+    );
   }
   args.push("-");
 

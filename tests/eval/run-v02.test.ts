@@ -41,6 +41,7 @@ const manifest = (overrides: Partial<V02RunManifest> = {}): V02RunManifest => ({
   reasoningEffort: "xhigh",
   pluginVersion: "0.2.0-rc.1",
   fixtureHash: hash,
+  memoryIsolation: "disabled",
   createdAt: "2026-09-04T00:00:00.000Z",
   ...overrides,
 });
@@ -58,6 +59,7 @@ const run = (overrides: Partial<V02EvalRun> = {}): V02EvalRun => ({
   reasoningEffort: "xhigh",
   pluginVersion: "0.2.0-rc.1",
   fixtureHash: hash,
+  memoryIsolation: "disabled",
   promptHash: hash,
   exitCode: 0,
   output: "결과",
@@ -143,6 +145,12 @@ describe("v0.2 run orchestration", () => {
     expect(() =>
       assertRunManifestCompatibility(manifest(), manifest({ model: "other" })),
     ).toThrow("Run manifest mismatch: model");
+    expect(() =>
+      assertRunManifestCompatibility(
+        manifest(),
+        manifest({ memoryIsolation: "inherit" as "disabled" }),
+      ),
+    ).toThrow("Run manifest mismatch: memoryIsolation");
   });
 
   it("moves reset artifacts to timestamped backups instead of deleting them", async () => {
@@ -295,6 +303,9 @@ describe("v0.2 run orchestration", () => {
         skipped: 0,
         failed: 0,
       });
+      await expect(
+        readFile(join(directory, "results", "run-manifest.json"), "utf8"),
+      ).resolves.toContain('"memoryIsolation": "disabled"');
       await expect(runV02Evaluation(options, dependencies)).resolves.toEqual({
         planned: 1,
         executed: 0,

@@ -24,6 +24,7 @@ export const V02RunManifestSchema = z
     reasoningEffort: z.string().min(1),
     pluginVersion: z.string().min(1).nullable(),
     fixtureHash: sha256,
+    memoryIsolation: z.literal("disabled"),
     createdAt: z.iso.datetime(),
   })
   .strict();
@@ -42,6 +43,7 @@ export const V02EvalRunSchema = z
     reasoningEffort: z.string().min(1),
     pluginVersion: z.string().min(1).nullable(),
     fixtureHash: sha256,
+    memoryIsolation: z.literal("disabled"),
     promptHash: sha256,
     exitCode: z.number().int(),
     output: z.string(),

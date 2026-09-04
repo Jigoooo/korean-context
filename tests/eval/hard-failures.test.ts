@@ -60,6 +60,7 @@ const completedRunWith = (
   reasoningEffort: "xhigh",
   pluginVersion: "0.2.0-rc.1",
   fixtureHash: hash,
+  memoryIsolation: "disabled",
   promptHash: hash,
   exitCode: 0,
   output,

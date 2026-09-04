@@ -52,6 +52,7 @@ const metadata: V02RunManifest = {
   reasoningEffort: "xhigh",
   pluginVersion: "0.2.0-rc.1",
   fixtureHash: hash,
+  memoryIsolation: "disabled",
   createdAt: "2026-09-04T00:00:00.000Z",
 };
 const legacyCase: EvalCase = {
@@ -134,6 +135,10 @@ describe("v0.2 Codex runner", () => {
           "evals/fixtures/v0.2/anonymized-workspace",
           "-c",
           "model_reasoning_effort=xhigh",
+          "-c",
+          "memories.use_memories=false",
+          "-c",
+          "memories.generate_memories=false",
           "-",
         ],
         {
@@ -151,6 +156,7 @@ describe("v0.2 Codex runner", () => {
       attempt: 1,
       status: "completed",
       output: "최종",
+      memoryIsolation: "disabled",
       promptHash:
         "04136058ce82f48dd54f3de907ff82057bf4c326314885912516d21c6cd26742",
     });

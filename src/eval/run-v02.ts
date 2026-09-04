@@ -198,6 +198,7 @@ const manifestIdentityKeys = [
   "reasoningEffort",
   "pluginVersion",
   "fixtureHash",
+  "memoryIsolation",
 ] as const satisfies readonly (keyof V02RunManifest)[];
 
 export function assertRunManifestCompatibility(
@@ -389,6 +390,7 @@ export async function runV02Evaluation(
     reasoningEffort: options.reasoningEffort,
     pluginVersion: options.pluginVersion,
     fixtureHash,
+    memoryIsolation: "disabled",
     createdAt: new Date().toISOString(),
   };
 

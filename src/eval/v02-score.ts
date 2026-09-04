@@ -303,6 +303,7 @@ const oneConfiguration = (runs: V02EvalRun[]) => {
         run.reasoningEffort,
         run.pluginVersion,
         run.fixtureHash,
+        run.memoryIsolation,
       ]),
     ),
   );
@@ -315,6 +316,7 @@ const comparableConfiguration = (run: V02EvalRun) =>
     run.model,
     run.reasoningEffort,
     run.fixtureHash,
+    run.memoryIsolation,
   ]);
 
 const comparableLegacyConfiguration = (run: V02EvalRun) =>
@@ -323,6 +325,7 @@ const comparableLegacyConfiguration = (run: V02EvalRun) =>
     run.model,
     run.reasoningEffort,
     run.pluginVersion,
+    run.memoryIsolation,
   ]);
 
 const isSuccessfulRun = (run: V02EvalRun) =>
