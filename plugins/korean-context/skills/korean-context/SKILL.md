@@ -9,7 +9,7 @@ Apply these steps only to the Korean artifact being created or edited.
 
 1. Confirm that the destination is persistent or publishable. If it is ordinary conversation, stop using this skill even when the prompt explicitly names it. 답변은 입력에 있는 사실과 일반 지식에 대한 직접적인 설명으로만 구성한다. 사용자가 저장소 확인을 요청하지 않았다면 workspace의 유무, 파일 경로·링크, 현재·과거 프로젝트 구조, 이전 세션 사실을 언급하지 않는다. 스킬 이름, 활성화 여부, 적용하지 않은 이유를 언급하지 않는다.
 2. Identify the surface and technical domain.
-3. Preserve explicit user instructions, existing artifact style, and project conventions in that order.
+3. Preserve explicit user instructions, existing artifact style, and project conventions in that order. If an artifact request requires project terminology but the mapping is not in the prompt, find and read the workspace vocabulary, terminology, or SSOT source before drafting.
 4. Read `references/core-artifact-boundary.md` and the relevant `references/surface-*.md` file.
 5. Read only the needed `references/domain-*.md` file. Use `references/core-terminology.md` when terminology is ambiguous.
 6. Apply `references/core-naturalness.md`, `references/core-translationese.md`, and `references/core-register.md` as needed.
