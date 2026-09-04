@@ -26,6 +26,7 @@ export type CodexProcessRequest = {
   model: string;
   reasoningEffort?: string;
   memoryIsolation?: "disabled";
+  disabledMcpServers?: string[];
   fixtureDirectory: string;
   timeoutMs: number;
 };
@@ -129,6 +130,9 @@ export async function executeCodexPrompt(
       "-c",
       "memories.generate_memories=false",
     );
+  }
+  for (const server of [...(request.disabledMcpServers ?? [])].sort()) {
+    args.push("-c", `mcp_servers.${server}.enabled=false`);
   }
   args.push("-");
 

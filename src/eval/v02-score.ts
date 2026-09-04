@@ -304,6 +304,7 @@ const oneConfiguration = (runs: V02EvalRun[]) => {
         run.pluginVersion,
         run.fixtureHash,
         run.memoryIsolation,
+        run.disabledMcpServers,
       ]),
     ),
   );
@@ -317,6 +318,7 @@ const comparableConfiguration = (run: V02EvalRun) =>
     run.reasoningEffort,
     run.fixtureHash,
     run.memoryIsolation,
+    run.disabledMcpServers,
   ]);
 
 const comparableLegacyConfiguration = (run: V02EvalRun) =>
@@ -326,6 +328,7 @@ const comparableLegacyConfiguration = (run: V02EvalRun) =>
     run.reasoningEffort,
     run.pluginVersion,
     run.memoryIsolation,
+    run.disabledMcpServers,
   ]);
 
 const isSuccessfulRun = (run: V02EvalRun) =>

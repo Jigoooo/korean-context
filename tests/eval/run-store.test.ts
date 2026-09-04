@@ -33,6 +33,7 @@ const runFixture = (overrides: Partial<V02EvalRun> = {}): V02EvalRun => ({
   pluginVersion: null,
   fixtureHash: hash,
   memoryIsolation: "disabled",
+  disabledMcpServers: [],
   promptHash: hash,
   exitCode: 0,
   output: "결과",
@@ -61,6 +62,7 @@ describe("v0.2 result storage", () => {
         pluginVersion: null,
         fixtureHash: hash,
         memoryIsolation: "disabled",
+        disabledMcpServers: [],
         createdAt: "2026-09-04T00:00:00.000Z",
       }),
     ).toMatchObject({ suite: "v0.2", mode: "baseline" });

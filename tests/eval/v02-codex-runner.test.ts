@@ -53,6 +53,7 @@ const metadata: V02RunManifest = {
   pluginVersion: "0.2.0-rc.1",
   fixtureHash: hash,
   memoryIsolation: "disabled",
+  disabledMcpServers: ["paper"],
   createdAt: "2026-09-04T00:00:00.000Z",
 };
 const legacyCase: EvalCase = {
@@ -87,7 +88,7 @@ describe("v0.2 Codex runner", () => {
 
   it("adds the skill invocation only in explicit mode", () => {
     expect(buildV02Prompt(testCase, "explicit")).toBe(
-      "Use $korean-context for the Korean artifact in this request.\n\n입력",
+      "Use $korean-context for this request. Follow its artifact boundary and do not assume the request asks for an artifact.\n\n입력",
     );
     expect(buildV02Prompt(testCase, "baseline")).toBe("입력");
   });
@@ -139,11 +140,13 @@ describe("v0.2 Codex runner", () => {
           "memories.use_memories=false",
           "-c",
           "memories.generate_memories=false",
+          "-c",
+          "mcp_servers.paper.enabled=false",
           "-",
         ],
         {
           input:
-            "Use $korean-context for the Korean artifact in this request.\n\n입력",
+            "Use $korean-context for this request. Follow its artifact boundary and do not assume the request asks for an artifact.\n\n입력",
           shell: false,
           timeout: 180_000,
         },
@@ -157,8 +160,9 @@ describe("v0.2 Codex runner", () => {
       status: "completed",
       output: "최종",
       memoryIsolation: "disabled",
+      disabledMcpServers: ["paper"],
       promptHash:
-        "04136058ce82f48dd54f3de907ff82057bf4c326314885912516d21c6cd26742",
+        "4d4f8ee58ce1545e259eff9db7d8c96b8b651d95de785f84b8b441295a1cbf25",
     });
   });
 

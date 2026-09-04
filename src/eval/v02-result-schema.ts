@@ -14,6 +14,16 @@ export type EvaluationSuite = (typeof evaluationSuites)[number];
 export type V02RunStatus = (typeof v02RunStatuses)[number];
 
 const sha256 = z.string().regex(/^[a-f0-9]{64}$/u);
+const disabledMcpServers = z
+  .array(z.string().regex(/^[A-Za-z0-9_-]+$/u))
+  .refine(
+    (items) =>
+      new Set(items).size === items.length &&
+      items.every(
+        (item, index) => index === 0 || item > (items[index - 1] ?? ""),
+      ),
+    "disabledMcpServers must be unique and sorted",
+  );
 
 export const V02RunManifestSchema = z
   .object({
@@ -25,6 +35,7 @@ export const V02RunManifestSchema = z
     pluginVersion: z.string().min(1).nullable(),
     fixtureHash: sha256,
     memoryIsolation: z.literal("disabled"),
+    disabledMcpServers,
     createdAt: z.iso.datetime(),
   })
   .strict();
@@ -44,6 +55,7 @@ export const V02EvalRunSchema = z
     pluginVersion: z.string().min(1).nullable(),
     fixtureHash: sha256,
     memoryIsolation: z.literal("disabled"),
+    disabledMcpServers,
     promptHash: sha256,
     exitCode: z.number().int(),
     output: z.string(),

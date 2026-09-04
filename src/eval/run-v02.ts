@@ -47,6 +47,7 @@ export type RunV02Options = {
   fixtureDirectory: string;
   outputPath: string;
   concurrency: number;
+  disabledMcpServers: string[];
   reset: boolean;
 };
 
@@ -78,6 +79,7 @@ export function parseRunV02Arguments(
   let fixtureDirectory: string | undefined;
   let outputPath: string | undefined;
   let concurrency = 2;
+  const disabledMcpServers = new Set<string>();
   let reset = false;
 
   for (let index = 0; index < args.length; index += 1) {
@@ -129,6 +131,15 @@ export function parseRunV02Arguments(
         concurrency = Number(takeValue(args, index, option));
         index += 1;
         break;
+      case "--disable-mcp": {
+        const value = takeValue(args, index, option);
+        if (!/^[A-Za-z0-9_-]+$/u.test(value)) {
+          throw new Error(`Invalid MCP server id: ${value}`);
+        }
+        disabledMcpServers.add(value);
+        index += 1;
+        break;
+      }
       case "--reset":
         reset = true;
         break;
@@ -186,6 +197,7 @@ export function parseRunV02Arguments(
         ),
     ),
     concurrency,
+    disabledMcpServers: [...disabledMcpServers].sort(),
     reset,
   };
 }
@@ -199,6 +211,7 @@ const manifestIdentityKeys = [
   "pluginVersion",
   "fixtureHash",
   "memoryIsolation",
+  "disabledMcpServers",
 ] as const satisfies readonly (keyof V02RunManifest)[];
 
 export function assertRunManifestCompatibility(
@@ -206,7 +219,13 @@ export function assertRunManifestCompatibility(
   requested: V02RunManifest,
 ): void {
   for (const key of manifestIdentityKeys) {
-    if (existing[key] !== requested[key]) {
+    const left = existing[key];
+    const right = requested[key];
+    const matches =
+      Array.isArray(left) && Array.isArray(right)
+        ? JSON.stringify(left) === JSON.stringify(right)
+        : left === right;
+    if (!matches) {
       throw new Error(`Run manifest mismatch: ${key}`);
     }
   }
@@ -391,6 +410,7 @@ export async function runV02Evaluation(
     pluginVersion: options.pluginVersion,
     fixtureHash,
     memoryIsolation: "disabled",
+    disabledMcpServers: options.disabledMcpServers,
     createdAt: new Date().toISOString(),
   };
 

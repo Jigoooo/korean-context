@@ -65,6 +65,7 @@ const runFor = (
   pluginVersion: mode === "explicit" ? "0.2.0-rc.1" : null,
   fixtureHash,
   memoryIsolation: "disabled",
+  disabledMcpServers: [],
   promptHash,
   exitCode: 0,
   output: "결과",
@@ -123,6 +124,7 @@ const legacyRun = (index: number): V02EvalRun => ({
   pluginVersion: "0.2.0-rc.1",
   fixtureHash: legacyFixtureHash,
   memoryIsolation: "disabled",
+  disabledMcpServers: [],
   promptHash,
   exitCode: 0,
   output: "결과",
@@ -270,6 +272,18 @@ describe("v0.2 release score and gate", () => {
     input.explicitRuns[0] = {
       ...(input.explicitRuns[0] as V02EvalRun),
       memoryIsolation: "inherit" as "disabled",
+    };
+
+    expect(evaluateV02ReleaseGate(input).reasons).toContain(
+      "mixed-configuration",
+    );
+  });
+
+  it("rejects mixed MCP-isolation settings", () => {
+    const input = completeGateInput();
+    input.explicitRuns[0] = {
+      ...(input.explicitRuns[0] as V02EvalRun),
+      disabledMcpServers: ["paper"],
     };
 
     expect(evaluateV02ReleaseGate(input).reasons).toContain(

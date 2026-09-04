@@ -61,6 +61,7 @@ const completedRunWith = (
   pluginVersion: "0.2.0-rc.1",
   fixtureHash: hash,
   memoryIsolation: "disabled",
+  disabledMcpServers: [],
   promptHash: hash,
   exitCode: 0,
   output,

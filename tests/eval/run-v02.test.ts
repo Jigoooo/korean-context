@@ -42,6 +42,7 @@ const manifest = (overrides: Partial<V02RunManifest> = {}): V02RunManifest => ({
   pluginVersion: "0.2.0-rc.1",
   fixtureHash: hash,
   memoryIsolation: "disabled",
+  disabledMcpServers: [],
   createdAt: "2026-09-04T00:00:00.000Z",
   ...overrides,
 });
@@ -60,6 +61,7 @@ const run = (overrides: Partial<V02EvalRun> = {}): V02EvalRun => ({
   pluginVersion: "0.2.0-rc.1",
   fixtureHash: hash,
   memoryIsolation: "disabled",
+  disabledMcpServers: [],
   promptHash: hash,
   exitCode: 0,
   output: "결과",
@@ -81,6 +83,7 @@ describe("v0.2 run orchestration", () => {
       reasoningEffort: "xhigh",
       pluginVersion: null,
       concurrency: 2,
+      disabledMcpServers: [],
       reset: false,
     });
     expect(options.manifestPath).toMatch(
@@ -135,6 +138,22 @@ describe("v0.2 run orchestration", () => {
     );
   });
 
+  it("parses repeatable MCP isolation overrides", () => {
+    const options = parseRunV02Arguments(
+      [
+        "--mode",
+        "baseline",
+        "--disable-mcp",
+        "paper",
+        "--disable-mcp",
+        "firecrawl",
+      ],
+      "fixture-root",
+    );
+
+    expect(options.disabledMcpServers).toEqual(["firecrawl", "paper"]);
+  });
+
   it("accepts identical manifests and rejects mixed execution settings", () => {
     expect(() =>
       assertRunManifestCompatibility(manifest(), {
@@ -151,6 +170,12 @@ describe("v0.2 run orchestration", () => {
         manifest({ memoryIsolation: "inherit" as "disabled" }),
       ),
     ).toThrow("Run manifest mismatch: memoryIsolation");
+    expect(() =>
+      assertRunManifestCompatibility(
+        manifest(),
+        manifest({ disabledMcpServers: ["paper"] }),
+      ),
+    ).toThrow("Run manifest mismatch: disabledMcpServers");
   });
 
   it("moves reset artifacts to timestamped backups instead of deleting them", async () => {
@@ -306,6 +331,9 @@ describe("v0.2 run orchestration", () => {
       await expect(
         readFile(join(directory, "results", "run-manifest.json"), "utf8"),
       ).resolves.toContain('"memoryIsolation": "disabled"');
+      await expect(
+        readFile(join(directory, "results", "run-manifest.json"), "utf8"),
+      ).resolves.toContain('"disabledMcpServers": []');
       await expect(runV02Evaluation(options, dependencies)).resolves.toEqual({
         planned: 1,
         executed: 0,

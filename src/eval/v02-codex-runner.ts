@@ -51,7 +51,7 @@ export function buildV02Prompt(
   if (mode === "baseline") {
     return evalCase.input;
   }
-  return `Use $korean-context for the Korean artifact in this request.\n\n${evalCase.input}`;
+  return `Use $korean-context for this request. Follow its artifact boundary and do not assume the request asks for an artifact.\n\n${evalCase.input}`;
 }
 
 const sha256 = (input: string) =>
@@ -83,6 +83,7 @@ export async function runCodexV02Attempt(
       model: context.metadata.model,
       reasoningEffort: context.metadata.reasoningEffort,
       memoryIsolation: context.metadata.memoryIsolation,
+      disabledMcpServers: context.metadata.disabledMcpServers,
       fixtureDirectory: context.fixtureDirectory,
       timeoutMs: context.timeoutMs ?? 180_000,
     },
@@ -103,6 +104,7 @@ export async function runCodexV02Attempt(
     pluginVersion: context.metadata.pluginVersion,
     fixtureHash: context.metadata.fixtureHash,
     memoryIsolation: context.metadata.memoryIsolation,
+    disabledMcpServers: context.metadata.disabledMcpServers,
     promptHash: sha256(prompt),
     exitCode: result.exitCode,
     output: result.output,
@@ -132,6 +134,7 @@ export async function runCodexLegacyAttempt(
       model: context.metadata.model,
       reasoningEffort: context.metadata.reasoningEffort,
       memoryIsolation: context.metadata.memoryIsolation,
+      disabledMcpServers: context.metadata.disabledMcpServers,
       fixtureDirectory: context.fixtureDirectory,
       timeoutMs: context.timeoutMs ?? 180_000,
     },
@@ -152,6 +155,7 @@ export async function runCodexLegacyAttempt(
     pluginVersion: context.metadata.pluginVersion,
     fixtureHash: context.metadata.fixtureHash,
     memoryIsolation: context.metadata.memoryIsolation,
+    disabledMcpServers: context.metadata.disabledMcpServers,
     promptHash: sha256(prompt),
     exitCode: result.exitCode,
     output: result.output,
