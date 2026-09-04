@@ -5,20 +5,18 @@ description: Use when creating or editing persistent or publishable Korean artif
 
 # Korean Context
 
-Apply these steps only to the Korean artifact being created or edited.
-
 ## Required workspace preflight
 
-Before choosing references or drafting, run this preflight when the request contains `<workspace>` or asks to follow project conventions:
+Run this before choosing references or drafting when the request contains `<workspace>`, asks for project conventions, or needs a project-specific fact or procedure not fully given:
 
-1. Treat the process working directory as the workspace root; never search for a directory literally named `<workspace>`.
-2. Run a read-only file search for vocabulary, terminology, glossary, wording, `용어`, `어휘`, or SSOT sources.
-3. Read the smallest authoritative match and extract the relevant preferred and forbidden forms.
-4. Only then choose references and draft the artifact.
+1. Treat the process working directory as the workspace root, not a literal `<workspace>` directory.
+2. Search read-only for vocabulary, terminology, glossary, wording, `용어`, `어휘`, or SSOT sources.
+3. For a missing fact or procedure, also search relevant project docs or source.
+4. Read the smallest authoritative match, extract only the needed facts and terms, then draft.
 
-A request for only the final artifact controls the response shape; it does not skip this internal preflight.
+Output-only requests still require this preflight.
 
-1. Confirm that the destination is persistent or publishable. If it is ordinary conversation, stop using this skill even when the prompt explicitly names it. 답변은 입력에 있는 사실과 일반 지식에 대한 직접적인 설명으로만 구성한다. 사용자가 저장소 확인을 요청하지 않았다면 workspace의 유무, 파일 경로·링크, 현재·과거 프로젝트 구조, 이전 세션 사실을 언급하지 않는다. 스킬 이름, 활성화 여부, 적용하지 않은 이유를 언급하지 않는다.
+1. If the destination is ordinary conversation, progress, planning, explanation, a question, or technical Q&A, answer only from the prompt and established general knowledge; preserve technical conditions, omit workspace, project, and session provenance unless requested, and stop. 스킬 이름, 활성화 여부, 적용하지 않은 이유를 언급하지 않는다.
 2. Identify the surface and technical domain.
 3. Preserve explicit user instructions, existing artifact style, and project conventions in that order. Apply any terminology or style found by the required workspace preflight.
 4. Read `references/core-artifact-boundary.md` and the relevant `references/surface-*.md` file.
