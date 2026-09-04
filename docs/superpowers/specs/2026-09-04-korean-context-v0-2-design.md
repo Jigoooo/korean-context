@@ -1,6 +1,6 @@
 # Korean Context v0.2 실전 품질 검증 설계
 
-**상태:** 사용자 문서 검토 대기
+**상태:** 승인됨
 
 **작성일:** 2026-09-04
 
@@ -151,6 +151,12 @@ type V02EvalCase = {
     forbidden: string[];
   };
   requiredFormat: string[];
+  automaticChecks: {
+    requiredSubstrings: string[];
+    forbiddenSubstrings: string[];
+    requiredPatterns: string[];
+    forbiddenPatterns: string[];
+  };
   provenance: "anonymized-derived" | "synthetic";
   sourceIds: string[];
   repeatCount: 1 | 3;
@@ -249,6 +255,7 @@ v0.1과 비교할 수 있도록 기존 10점 체계를 유지한다.
 - 프로젝트 승인 용어 위반: 0건
 - 보호 토큰, 사실, 숫자, 명령어와 키 이름 훼손: 0건
 - 입력에 없는 사실 또는 조건 생성: 0건
+- 일반 대화 경계 침범: 0건
 - 자연스러운 문장 불필요 수정: 5% 이하
 - 요구 형식 준수: 95% 이상
 - gold awkwardness 교정: 90% 이상

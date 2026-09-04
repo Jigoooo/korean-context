@@ -6,7 +6,7 @@
 
 **Current milestone:** v0.2 — Offen-based real-world quality validation
 
-**Next task:** Review and approve `docs/superpowers/specs/2026-09-04-korean-context-v0-2-design.md`, then write the implementation plan.
+**Next task:** Execute Task 1 in `docs/superpowers/plans/2026-09-04-korean-context-v0-2.md`: add the versioned v0.2 suite schema and manifest loader.
 
 **V1 supported agents:** Codex and Claude Code only
 
@@ -19,6 +19,8 @@
 - Full product plan: `plans/korean-context-full-plan/`
 - v0.1 design: `docs/superpowers/specs/2026-09-03-korean-context-v0-1-design.md`
 - v0.1 plan: `docs/superpowers/plans/2026-09-03-korean-context-v0-1.md`
+- v0.2 design: `docs/superpowers/specs/2026-09-04-korean-context-v0-2-design.md`
+- v0.2 plan: `docs/superpowers/plans/2026-09-04-korean-context-v0-2.md`
 - v0.1 evidence: `evals/results/v0.1/summary.md`
 
 ## Status and handoff rules
@@ -74,8 +76,8 @@ Before session end:
 ### 1.1 Evaluation contract
 
 - [x] Add a v0.2 design spec reflecting the approved evaluation architecture and release gates.
-- [ ] Review the written v0.2 design and approve the implementation-plan transition.
-- [ ] Add a task-level v0.2 implementation plan linked here.
+- [x] Review the written v0.2 design and approve the implementation-plan transition.
+- [x] Add a task-level v0.2 implementation plan linked here.
 - [ ] Extend the case schema with register, project vocabulary, protected meaning, forbidden behavior, and anonymized provenance.
 - [ ] Define scoring for detection, rewrite quality, meaning preservation, project-style preservation, format adherence, and unnecessary edits.
 - [ ] Define deterministic hard failures before collecting model results.
@@ -100,6 +102,7 @@ Before session end:
 
 - [ ] Technical meaning corruption is `0`.
 - [ ] Project-approved terminology violations are `0`.
+- [ ] Assistant-conversation boundary violations are `0`.
 - [ ] Protected identifiers, numbers, commands, and keys are preserved in every case.
 - [ ] Natural-text unnecessary rewrite rate is at most `5%`.
 - [ ] Required output-format adherence is at least `95%`.
@@ -185,5 +188,6 @@ git rev-list --left-right --count main...origin/main
 
 ## Session log
 
+- 2026-09-04 — Approved the written v0.2 design and added a 12-task test-driven implementation plan. Self-review confirmed complete task numbering, explicit interfaces, v0.1 compatibility, public/local isolation, and baseline/explicit gate separation. Next work is Task 1; implementation has not started.
 - 2026-09-04 — Approved the hybrid public-fixture and local-Offen evaluation architecture, the 160-case structure, scoring, repetition, error handling, and release gates. Wrote the v0.2 design spec; implementation has not started.
 - 2026-09-04 — Restricted V1 support to Codex and Claude Code. Selected v0.2 real-world validation before v0.3 Claude Code support. Verified `pnpm check` with 44 passing tests and confirmed the latest `main` CI succeeded. Created this canonical tracker; v0.2 implementation has not started.
