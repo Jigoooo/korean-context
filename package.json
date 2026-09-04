@@ -21,7 +21,7 @@
     "eval:run": "tsx src/eval/run-cli.ts",
     "eval:score": "tsx src/eval/score-cli.ts",
     "plugin:validate": "tsx src/plugin/validate-cli.ts",
-    "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm research:validate && pnpm eval:validate && pnpm plugin:validate"
+    "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm research:validate && pnpm eval:validate && pnpm eval:v0.2:validate && pnpm plugin:validate"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

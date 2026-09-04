@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "0.2",
+  "totalCases": 60,
+  "repeatedCases": 20,
+  "files": [
+    {
+      "path": "repair.jsonl",
+      "scenarioType": "real-world-repair",
+      "count": 20
+    },
+    {
+      "path": "preserve.jsonl",
+      "scenarioType": "preserve",
+      "count": 10
+    },
+    {
+      "path": "project-conflict.jsonl",
+      "scenarioType": "project-conflict",
+      "count": 10
+    },
+    {
+      "path": "long-artifact.jsonl",
+      "scenarioType": "long-artifact",
+      "count": 10
+    },
+    {
+      "path": "format.jsonl",
+      "scenarioType": "format",
+      "count": 5
+    },
+    {
+      "path": "boundary.jsonl",
+      "scenarioType": "boundary",
+      "count": 5
+    }
+  ]
+}

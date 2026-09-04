@@ -6,11 +6,11 @@
 
 **Current milestone:** v0.2 — Offen-based real-world quality validation
 
-**Detailed progress:** v0.2 implementation tasks 7/12 complete; Tasks 8–12 remain.
+**Detailed progress:** v0.2 implementation tasks 8/12 complete; Tasks 9–12 remain.
 
 **V1 outlook:** Milestone 0 is complete, Milestone 1 is in progress, and Milestones 2–5 remain.
 
-**Next task:** Execute Task 8 in `docs/superpowers/plans/2026-09-04-korean-context-v0-2.md`: author project-conflict, long-artifact, format, and boundary cases.
+**Next task:** Execute Task 9 in `docs/superpowers/plans/2026-09-04-korean-context-v0-2.md`: add the read-only local repository audit runner.
 
 **V1 supported agents:** Codex and Claude Code only
 
@@ -88,11 +88,11 @@ Before session end:
 
 ### 1.2 Offen-derived fixture
 
-- [ ] Convert observed UI, comment, commit, PR, and documentation problems into minimal anonymized fixtures.
-- [ ] Add conflicts covering project-approved terms such as `위젯`, `배치`, `칸`, and `서랍`.
-- [ ] Add long artifacts containing identifiers, numbers, keyboard keys, and mixed Korean/English terminology.
+- [x] Convert observed UI, comment, commit, PR, and documentation problems into minimal anonymized fixtures.
+- [x] Add conflicts covering project-approved terms such as `위젯`, `배치`, `칸`, and `서랍`.
+- [x] Add long artifacts containing identifiers, numbers, keyboard keys, and mixed Korean/English terminology.
 - [x] Add natural Korean controls that must remain unchanged.
-- [ ] Verify that no private source, secret, customer data, or excessive copied context is committed.
+- [x] Verify that no private source, secret, customer data, or excessive copied context is committed.
 
 ### 1.3 Comparative evaluation
 
@@ -191,6 +191,8 @@ git rev-list --left-right --count main...origin/main
 ```
 
 ## Session log
+
+- 2026-09-04 — Completed v0.2 Task 8 on `feat/v0.2-eval-foundation`: added 10 project-conflict, 10 long-artifact, five format, and five conversation-boundary cases; added the synthetic vocabulary, UI, and docs context plus the production manifest. The complete public suite now contains 60 cases, 20 repeated cases, and 160 cases with v0.1. `pnpm check` now includes v0.2 suite and privacy validation. Verified 33 focused tests, then passed the full check with 163 tests. Next work is Task 9.
 
 - 2026-09-04 — Completed v0.2 Task 7 on `feat/v0.2-eval-foundation`: added 20 anonymized-derived repair cases across UI, error, comment, commit, PR, review, and docs surfaces; added 10 synthetic exact-output preservation controls and the minimal synthetic workspace README. Eight repair cases use three attempts. Verified 15 focused data-pack and privacy tests, then passed the full check with 158 tests. Next work is Task 8.
 

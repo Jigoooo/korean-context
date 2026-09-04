@@ -7,6 +7,7 @@ export default tseslint.config(
       ".worktrees",
       "coverage",
       "dist",
+      "evals/fixtures",
       "evals/results",
       "node_modules",
       "plans",

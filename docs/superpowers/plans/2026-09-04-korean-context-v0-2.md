@@ -1016,6 +1016,7 @@ git commit -m "test(eval): 실전 교정과 보존 사례 추가"
 - Create: `evals/fixtures/v0.2/anonymized-workspace/packages/client/widget-copy.tsx`
 - Create: `evals/fixtures/v0.2/anonymized-workspace/docs/widget-layout.md`
 - Create: `tests/eval/v02-corpus.test.ts`
+- Modify: `eslint.config.js`
 - Modify: `package.json`
 - Modify: `ROADMAP.md`
 
@@ -1023,7 +1024,7 @@ git commit -m "test(eval): 실전 교정과 보존 사례 추가"
 
 - Consumes: Tasks 1, 2, 5, and 7.
 - Produces: the remaining 30 public cases and 12 repeated cases, completing the 60-case suite.
-- [ ] **Step 1: Write the project-conflict matrix**
+- [x] **Step 1: Write the project-conflict matrix**
 
 Create `v02-project-conflict-001..010`. Cases 001, 002, 004, 006, 008, and 010 use `repeatCount: 3`.
 
@@ -1039,25 +1040,25 @@ Create `v02-project-conflict-001..010`. Cases 001, 002, 004, 006, 008, and 010 u
 
 List approved terms in `preferred`, incorrect substitutions in `forbidden`, and matching deterministic forbidden-substring checks. Do not promote these local terms to global reference packs.
 
-- [ ] **Step 2: Write the long-artifact matrix**
+- [x] **Step 2: Write the long-artifact matrix**
 
 Create `v02-long-artifact-001..010`. Cases 001, 003, 005, 007, 009, and 010 use `repeatCount: 3`.
 
 Cover four UI/error tasks, three technical documents, one PR body, one comment block, and one release note. Each input contains at least two of: identifiers, version numbers, CLI commands, keyboard keys, Markdown structure, or mixed Korean/English terminology. Protect exact values such as `AbortController`, `WebGL`, `Shift`, `Esc`, `v0.2.0`, and `pnpm check` only when present in the input.
-- [ ] **Step 3: Write format and boundary matrices**
+- [x] **Step 3: Write format and boundary matrices**
 
 Create five format cases: one commit subject, one bullet list, one Markdown table, one exact-output review, and one single-line UI label. All use `repeatCount: 1` and exactly one matching `requiredFormat` value.
 
 Create five boundary cases for architecture explanation, implementation planning, progress reporting, debugging conversation, and general technical Q&A. All use `surface: "conversation"`, `kind: "boundary"`, `repeatCount: 1`, and forbid turning the answer into an artifact rewrite.
 
-- [ ] **Step 4: Add synthetic context files**
+- [x] **Step 4: Add synthetic context files**
 
 `vocabulary.md` defines only the fixture's approved `위젯`, `배치`, `칸`, and `서랍` terms. `widget-copy.tsx` contains synthetic UI constants and identifiers. `widget-layout.md` provides a short established 한다체 document. Use `<workspace>` in prose and no absolute path.
 
-- [ ] **Step 5: Add the production manifest and full corpus test**
+- [x] **Step 5: Add the production manifest and full corpus test**
 
 Create the manifest with file counts `repair=20`, `preserve=10`, `project-conflict=10`, `long-artifact=10`, `format=5`, and `boundary=5`, plus `totalCases: 60` and `repeatedCases: 20`. Create `tests/eval/v02-corpus.test.ts` to load the production manifest and assert those counts, unique IDs, valid research source links, 20 repeated cases, and 160 cases when combined with v0.1. Add `pnpm eval:v0.2:validate` to the existing `check` script only after this complete production suite passes.
-- [ ] **Step 6: Run the complete suite and privacy validation**
+- [x] **Step 6: Run the complete suite and privacy validation**
 
 ```powershell
 pnpm eval:v0.2:validate
@@ -1067,14 +1068,14 @@ pnpm check
 
 Expected: 60 v0.2 cases, 20 repeated cases, 160 total v0.1+v0.2 cases, zero privacy violations, and a green full check.
 
-- [ ] **Step 7: Review every anonymized-derived case**
+- [x] **Step 7: Review every anonymized-derived case**
 
 For each case, compare only against the local source during review, then confirm that the public case contains the minimum necessary context and no recoverable private path, branch, commit, internal identifier, or source block. Record the review by keeping `privacyReviewed: true`; do not add local provenance to Git.
 
-- [ ] **Step 8: Update the roadmap and commit**
+- [x] **Step 8: Update the roadmap and commit**
 
 ```powershell
-git add evals/cases/v0.2 evals/fixtures/v0.2 tests/eval/v02-corpus.test.ts package.json ROADMAP.md
+git add evals/cases/v0.2 evals/fixtures/v0.2 tests/eval/v02-corpus.test.ts eslint.config.js package.json docs/superpowers/plans/2026-09-04-korean-context-v0-2.md ROADMAP.md
 git commit -m "test(eval): v0.2 공개 평가 세트 완성"
 ```
 ---
