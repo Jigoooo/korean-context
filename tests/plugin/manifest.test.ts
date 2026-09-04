@@ -9,7 +9,7 @@ describe("plugin manifest", () => {
     ) as Record<string, unknown>;
 
     expect(manifest.name).toBe("korean-context");
-    expect(manifest.version).toMatch(/^0\.2\.0-rc\.10\+codex\.[0-9]+$/u);
+    expect(manifest.version).toMatch(/^0\.2\.0-rc\.11\+codex\.[0-9]+$/u);
     expect(manifest.skills).toBe("./skills/");
     expect(manifest.license).toBe("MIT");
     expect(manifest).not.toHaveProperty("mcpServers");
