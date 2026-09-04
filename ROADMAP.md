@@ -6,7 +6,7 @@
 
 **Current milestone:** v0.2 — Offen-based real-world quality validation
 
-**Next task:** Execute Task 1 in `docs/superpowers/plans/2026-09-04-korean-context-v0-2.md`: add the versioned v0.2 suite schema and manifest loader.
+**Next task:** Execute Task 2 in `docs/superpowers/plans/2026-09-04-korean-context-v0-2.md`: add public-evaluation privacy and suite validation.
 
 **V1 supported agents:** Codex and Claude Code only
 
@@ -78,7 +78,7 @@ Before session end:
 - [x] Add a v0.2 design spec reflecting the approved evaluation architecture and release gates.
 - [x] Review the written v0.2 design and approve the implementation-plan transition.
 - [x] Add a task-level v0.2 implementation plan linked here.
-- [ ] Extend the case schema with register, project vocabulary, protected meaning, forbidden behavior, and anonymized provenance.
+- [x] Extend the case schema with register, project vocabulary, protected meaning, forbidden behavior, and anonymized provenance.
 - [ ] Define scoring for detection, rewrite quality, meaning preservation, project-style preservation, format adherence, and unnecessary edits.
 - [ ] Define deterministic hard failures before collecting model results.
 
@@ -188,6 +188,7 @@ git rev-list --left-right --count main...origin/main
 
 ## Session log
 
+- 2026-09-04 — Completed v0.2 Task 1 on `feat/v0.2-eval-foundation`: added strict versioned case/manifest schemas and a manifest-driven loader while preserving the v0.1 loader. Verified 23 focused and v0.1 regression tests, then passed the full check with 59 tests. Next work is Task 2.
 - 2026-09-04 — Approved the written v0.2 design and added a 12-task test-driven implementation plan. Self-review confirmed complete task numbering, explicit interfaces, v0.1 compatibility, public/local isolation, and baseline/explicit gate separation. Next work is Task 1; implementation has not started.
 - 2026-09-04 — Approved the hybrid public-fixture and local-Offen evaluation architecture, the 160-case structure, scoring, repetition, error handling, and release gates. Wrote the v0.2 design spec; implementation has not started.
 - 2026-09-04 — Restricted V1 support to Codex and Claude Code. Selected v0.2 real-world validation before v0.3 Claude Code support. Verified `pnpm check` with 44 passing tests and confirmed the latest `main` CI succeeded. Created this canonical tracker; v0.2 implementation has not started.

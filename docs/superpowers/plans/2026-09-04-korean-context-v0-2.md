@@ -57,7 +57,6 @@
 - Create: `src/eval/v02-schema.ts`
 - Create: `src/eval/load-v02-suite.ts`
 - Create: `tests/eval/v02-suite.test.ts`
-- Create: `evals/cases/v0.2/manifest.json`
 
 **Interfaces:**
 
@@ -65,7 +64,7 @@
 - Produces: `loadV02CaseFile(path: string, scenarioType: V02ScenarioType): Promise<V02EvalCase[]>` and `loadV02Suite(manifestPath: string): Promise<{ manifest: V02SuiteManifest; cases: V02EvalCase[] }>`.
 - Preserves: `EvalCaseSchema` and `loadEvalCases()` behavior for v0.1.
 
-- [ ] **Step 1: Write failing schema and manifest tests**
+- [x] **Step 1: Write failing schema and manifest tests**
 
 Create `tests/eval/v02-suite.test.ts` with temporary manifest helpers and these assertions:
 
@@ -73,9 +72,10 @@ Create `tests/eval/v02-suite.test.ts` with temporary manifest helpers and these 
 it("loads a manifest-declared v0.2 suite", async () => {
   const suite = await withV02Suite(validManifest, validCaseLines, loadV02Suite);
   expect(suite.manifest.schemaVersion).toBe("0.2");
-  expect(suite.cases.map((item) => item.id)).toEqual([
+  expect(suite.cases).toHaveLength(60);
+  expect(suite.cases.map((item) => item.id)).toContain(
     "v02-real-world-repair-001",
-  ]);
+  );
 });
 
 it.each([
@@ -92,7 +92,7 @@ it("keeps the v0.1 loader unchanged", async () => {
 });
 ```
 
-- [ ] **Step 2: Run the focused test and confirm the missing-module failure**
+- [x] **Step 2: Run the focused test and confirm the missing-module failure**
 
 Run:
 
@@ -102,7 +102,7 @@ pnpm vitest run tests/eval/v02-suite.test.ts
 
 Expected: FAIL because `v02-schema.ts` and `load-v02-suite.ts` do not exist.
 
-- [ ] **Step 3: Implement strict v0.2 schemas**
+- [x] **Step 3: Implement strict v0.2 schemas**
 
 Create `src/eval/v02-schema.ts` with these public shapes:
 
@@ -147,7 +147,7 @@ export const V02EvalCaseSchema = z.object({
   expectedBehavior: z.array(z.string().min(1)).min(1),
   forbiddenBehavior: z.array(z.string().min(1)),
   protectedTokens: z.array(z.string().min(1)),
-  protectedFacts: z.array(z.string().min(1)),
+  protectedFacts: z.array(z.string().min(1)).min(1),
   expectedRegister: z.enum(registers),
   projectVocabulary: z.object({
     preferred: z.array(z.string().min(1)),
@@ -157,10 +157,20 @@ export const V02EvalCaseSchema = z.object({
   requiredFormat: z.array(z.enum(v02RequiredFormats)),
   automaticChecks: AutomaticChecksSchema,
   provenance: z.enum(["anonymized-derived", "synthetic"]),
-  sourceIds: z.array(z.string().min(1)),
+  sourceIds: z.array(z.string().min(1)).min(1),
   repeatCount: z.union([z.literal(1), z.literal(3)]),
   privacyReviewed: z.literal(true),
-}).strict();
+})
+  .strict()
+  .superRefine((value, context) => {
+    if (!value.id.startsWith(`v02-${value.scenarioType}-`)) {
+      context.addIssue({
+        code: "custom",
+        path: ["id"],
+        message: `Case id ${value.id} does not match scenario ${value.scenarioType}`,
+      });
+    }
+  });
 
 export const V02SuiteManifestSchema = z.object({
   schemaVersion: z.literal("0.2"),
@@ -172,11 +182,12 @@ export const V02SuiteManifestSchema = z.object({
     count: z.number().int().positive(),
   })).length(6),
 }).strict();
+
 ```
 
 Export inferred TypeScript types from both schemas. Keep `automaticChecks` deterministic; `protectedFacts` remains the human-readable meaning contract.
 
-- [ ] **Step 4: Implement manifest-driven loading**
+- [x] **Step 4: Implement manifest-driven loading**
 
 Create `src/eval/load-v02-suite.ts`. Implement `loadV02CaseFile()` as the single JSONL parser and call it from `loadV02Suite()`. Resolve every declared file relative to the manifest directory, reject paths that escape that directory, parse line-by-line with `file:line` errors, and then assert:
 
@@ -188,10 +199,10 @@ export async function loadV02Suite(
 
 The implementation must reject duplicate IDs, wrong `scenarioType` for a declared file, mismatched per-file counts, a total other than 60, a repeated-case count other than 20, and undeclared `.jsonl` files.
 
-- [ ] **Step 5: Exercise the loader with a complete temporary manifest**
+- [x] **Step 5: Exercise the loader with a complete temporary manifest**
 
 Keep the manifest and all six JSONL files inside the temporary test directory. Use the exact distribution `20/10/10/10/5/5` and 20 repeated cases, then assert `loadV02Suite()` returns 60 cases. Do not add a production manifest until Task 8 can add all six complete data files atomically.
-- [ ] **Step 6: Run schema and v0.1 regression tests**
+- [x] **Step 6: Run schema and v0.1 regression tests**
 
 Run:
 
@@ -201,7 +212,7 @@ pnpm vitest run tests/eval/v02-suite.test.ts tests/eval/corpus.test.ts
 
 Expected: PASS with both the new suite tests and all existing v0.1 corpus tests green.
 
-- [ ] **Step 7: Update the roadmap and commit**
+- [x] **Step 7: Update the roadmap and commit**
 
 Mark only the v0.2 schema and loader foundation complete. Set the next task to Task 2.
 
