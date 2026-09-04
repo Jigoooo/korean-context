@@ -1,0 +1,10 @@
+{
+  "suite": "v0.2",
+  "mode": "explicit",
+  "codexVersion": "codex-cli 0.147.0",
+  "model": "gpt-5.6-sol",
+  "reasoningEffort": "xhigh",
+  "pluginVersion": "0.2.0-rc.1",
+  "fixtureHash": "08d1ecc3fad0682a3e9aa013ee4d54783758276d33998b791d5961ce87dbc0c1",
+  "createdAt": "2026-09-04T09:21:28.726Z"
+}

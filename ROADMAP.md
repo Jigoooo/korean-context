@@ -6,11 +6,11 @@
 
 **Current milestone:** v0.2 — Offen-based real-world quality validation
 
-**Detailed progress:** v0.2 implementation tasks 9/12 complete; Tasks 10–12 remain.
+**Detailed progress:** v0.2 implementation tasks 10/12 complete; Tasks 11–12 remain.
 
 **V1 outlook:** Milestone 0 is complete, Milestone 1 is in progress, and Milestones 2–5 remain.
 
-**Next task:** Execute Task 10 in `docs/superpowers/plans/2026-09-04-korean-context-v0-2.md`: run local stress tests and collect public raw results.
+**Next task:** Execute Task 11 in `docs/superpowers/plans/2026-09-04-korean-context-v0-2.md`: score results, fix regressions, and pass the gate.
 
 **V1 supported agents:** Codex and Claude Code only
 
@@ -96,10 +96,10 @@ Before session end:
 
 ### 1.3 Comparative evaluation
 
-- [ ] Run the deterministic copy scanner against the fixed fixture.
-- [ ] Run Codex without Korean Context against the same fixture.
-- [ ] Run Codex with explicit Korean Context activation against the same fixture.
-- [ ] Run the hardest fixed subset three times in fresh sessions to measure variance.
+- [x] Run the deterministic copy scanner against the fixed fixture.
+- [x] Run Codex without Korean Context against the same fixture.
+- [x] Run Codex with explicit Korean Context activation against the same fixture.
+- [x] Run the hardest fixed subset three times in fresh sessions to measure variance.
 - [ ] Score blind to mode where practical and retain raw outputs and rationale.
 
 ### 1.4 v0.2 release gate
@@ -191,6 +191,8 @@ git rev-list --left-right --count main...origin/main
 ```
 
 ## Session log
+
+- 2026-09-04 — Completed v0.2 Task 10 on `feat/v0.2-eval-foundation`: built and installed `0.2.0-rc.1`, collected 100 baseline and 100 explicit public runs, and completed 100 effective v0.1 regressions while preserving one timeout retry in 101 raw records. Public model outputs use synthetic fixtures only. Offen local model transmission was not authorized, so the local-only copy and vocabulary scanners were used instead and passed with a clean Linux Git status. Added deterministic stderr path redaction after quarantining the original 301 records under ignored `.local/`; public privacy validation then passed. Full check passed with 181 tests. Next work is Task 11.
 
 - 2026-09-04 — Completed v0.2 Task 9 on `feat/v0.2-eval-foundation`: added strict local source manifests, real-path containment, UTF-8 line-range reads, source hashing, append-only resume, and per-attempt source/Git immutability checks. Added the `.local`-only CLI and runbook. Verified 18 focused local and Codex runner tests, then passed the full check with 174 tests. Next work is Task 10.
 

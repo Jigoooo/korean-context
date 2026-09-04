@@ -1182,17 +1182,26 @@ git commit -m "feat(eval): 로컬 저장소 읽기 전용 검사 추가"
 - Create: `evals/results/v0.2/<mode>/runs.jsonl`
 - Create: `evals/results/v0.2/v0.1-regression/run-manifest.json`
 - Create: `evals/results/v0.2/v0.1-regression/runs.jsonl`
+- Modify: `src/eval/privacy.ts`
+- Modify: `src/eval/v02-codex-runner.ts`
+- Modify: `src/eval/local-audit.ts`
+- Modify: `src/plugin/schema.ts`
+- Modify: `tests/eval/privacy.test.ts`
+- Modify: `tests/eval/v02-codex-runner.test.ts`
+- Modify: `tests/eval/local-suite.test.ts`
+- Modify: `tests/plugin/manifest.test.ts`
+- Create: `tests/plugin/schema.test.ts`
 - Modify: `ROADMAP.md`
 
 **Interfaces:**
 
 - Consumes: the public suite, local runner, Codex runner, and `0.2.0-rc.1` plugin candidate.
 - Produces: append-only public runs and ignored local corroboration results.
-- [ ] **Step 1: Create and verify the release-candidate plugin build**
+- [x] **Step 1: Create and verify the release-candidate plugin build**
 
 Set the plugin version to `0.2.0-rc.1`, run the official plugin and skill validators, and update the local cachebuster through the plugin-creator workflow. Build the candidate but keep `korean-context@personal` absent until Step 4. Record `codex --version`, model `gpt-5.6-sol`, reasoning effort `xhigh`, plugin version, and fixture hash.
 
-- [ ] **Step 2: Run the local Offen audit without modifying it**
+- [x] **Step 2: Run the local Offen audit without modifying it**
 
 Create the ignored source manifest from reviewed UI, comment, commit, PR, and documentation locations. Confirm Korean Context is absent, save Git status, run local baseline, and require byte-identical status afterward.
 
@@ -1201,7 +1210,9 @@ pnpm eval:v0.2:local -- --manifest .local/evals/v0.2/source-manifest.json --mode
 ```
 
 Run the existing Offen copy scanners separately and retain only local aggregate coverage. Do not copy private raw outputs into this repository.
-- [ ] **Step 3: Run the public baseline with Korean Context absent**
+
+**Execution note (2026-09-04):** The private-source model audit was not run because transmitting the selected Offen lines to an external model lacked destination-specific approval. The safer local-only path ran `lint:copy` and `lint:vocabulary`, both passed, and Linux Git status remained clean. Only the aggregate result is retained under ignored `.local/`; public model evidence uses synthetic fixtures exclusively.
+- [x] **Step 3: Run the public baseline with Korean Context absent**
 
 Remove only `korean-context@personal`, confirm it is absent from `codex plugin list`, and run:
 
@@ -1211,7 +1222,7 @@ pnpm eval:v0.2:run -- --suite v0.2 --mode baseline --model gpt-5.6-sol --reasoni
 
 Expected: 100 effective runs: 40 single-attempt cases and 20 cases with three attempts.
 
-- [ ] **Step 4: Install the candidate and run explicit mode**
+- [x] **Step 4: Install the candidate and run explicit mode**
 
 Install the exact candidate and read back `0.2.0-rc.1`. Run local explicit mode first and confirm the Offen status remains unchanged, then run the public explicit suite:
 
@@ -1222,7 +1233,7 @@ pnpm eval:v0.2:run -- --suite v0.2 --mode explicit --model gpt-5.6-sol --reasoni
 
 Expected: 100 effective explicit runs with the same Codex version, model, effort, and fixture hash as baseline.
 
-- [ ] **Step 5: Run all 100 v0.1 cases as explicit regressions**
+- [x] **Step 5: Run all 100 v0.1 cases as explicit regressions**
 
 ```powershell
 pnpm eval:v0.2:run -- --suite v0.1-regression --mode explicit --model gpt-5.6-sol --reasoning-effort xhigh --plugin-version 0.2.0-rc.1 --output evals/results/v0.2/v0.1-regression/runs.jsonl
@@ -1230,7 +1241,7 @@ pnpm eval:v0.2:run -- --suite v0.1-regression --mode explicit --model gpt-5.6-so
 
 Expected: 100 successful single-attempt legacy runs.
 
-- [ ] **Step 6: Validate completeness without scoring quality yet**
+- [x] **Step 6: Validate completeness without scoring quality yet**
 
 ```powershell
 pnpm eval:v0.2:validate
@@ -1239,7 +1250,7 @@ pnpm test
 
 Require 100 baseline, 100 explicit, and 100 legacy effective runs. Infrastructure failures must be retried under the same composite key and preserved in raw JSONL.
 
-- [ ] **Step 7: Review public outputs for privacy and commit raw evidence**
+- [x] **Step 7: Review public outputs for privacy and commit raw evidence**
 
 ```powershell
 pnpm eval:v0.2:validate

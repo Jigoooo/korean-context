@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 
 import { executeCodexPrompt, type CommandExecutor } from "./codex-process.js";
+import { redactPrivateText } from "./privacy.js";
 import type { EvalCase } from "./schema.js";
 import type { V02EvalCase } from "./v02-schema.js";
 import type {
@@ -103,7 +104,7 @@ export async function runCodexV02Attempt(
     promptHash: sha256(prompt),
     exitCode: result.exitCode,
     output: result.output,
-    stderr: result.stderr,
+    stderr: redactPrivateText(result.stderr),
   };
 }
 export async function runCodexLegacyAttempt(
@@ -150,6 +151,6 @@ export async function runCodexLegacyAttempt(
     promptHash: sha256(prompt),
     exitCode: result.exitCode,
     output: result.output,
-    stderr: result.stderr,
+    stderr: redactPrivateText(result.stderr),
   };
 }

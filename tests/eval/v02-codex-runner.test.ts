@@ -252,6 +252,27 @@ describe("v0.2 Codex runner", () => {
       stderr: "failure",
     });
   });
+  it("redacts private paths from public run stderr", async () => {
+    const execute: CommandExecutor = () =>
+      Promise.resolve({
+        exitCode: 0,
+        stdout:
+          '{"type":"item.completed","item":{"type":"agent_message","text":"결과"}}',
+        stderr: String.raw`warning C:\Users\alice\.codex\cache`,
+      });
+    const attempt = planV02Attempts(testCase, "explicit")[0];
+    if (!attempt) {
+      throw new Error("Expected an attempt");
+    }
+
+    const result = await runCodexV02Attempt(
+      attempt,
+      { metadata, fixtureDirectory: "fixture" },
+      execute,
+    );
+    expect(result.stderr).toContain("<redacted-user-path>");
+    expect(result.stderr).not.toContain("alice");
+  });
   it("plans and records one explicit v0.1 regression attempt", async () => {
     expect(planLegacyAttempts([legacyCase])).toEqual([
       { evalCase: legacyCase, mode: "explicit", attempt: 1 },

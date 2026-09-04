@@ -1,6 +1,6 @@
 {
   "name": "korean-context",
-  "version": "0.1.0",
+  "version": "0.2.0-rc.1+codex.20260904084508",
   "description": "Write Korean software artifacts with context-appropriate wording, terminology, and register.",
   "author": {
     "name": "김지우",

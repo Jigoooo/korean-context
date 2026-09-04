@@ -33,6 +33,14 @@ export type LocalAuditDependencies = {
   getCodexVersion: () => Promise<string>;
   readGitStatus: (repositoryRoot: string) => Promise<string>;
 };
+export const buildGitStatusArguments = (repositoryRoot: string) => [
+  "-c",
+  "safe.directory=*",
+  "-C",
+  repositoryRoot,
+  "status",
+  "--porcelain=v1",
+];
 
 const defaultDependencies: LocalAuditDependencies = {
   execute: undefined,
@@ -41,11 +49,9 @@ const defaultDependencies: LocalAuditDependencies = {
     return result.stdout.trim();
   },
   readGitStatus: async (repositoryRoot) => {
-    const result = await execa(
-      "git",
-      ["-C", repositoryRoot, "status", "--porcelain=v1"],
-      { shell: false },
-    );
+    const result = await execa("git", buildGitStatusArguments(repositoryRoot), {
+      shell: false,
+    });
     return result.stdout;
   },
 };

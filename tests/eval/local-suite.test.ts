@@ -5,7 +5,10 @@ import { dirname, join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 import type { CommandExecutor } from "../../src/eval/codex-process.js";
-import { runLocalAudit } from "../../src/eval/local-audit.js";
+import {
+  buildGitStatusArguments,
+  runLocalAudit,
+} from "../../src/eval/local-audit.js";
 
 import {
   assertLocalSourceHashesUnchanged,
@@ -68,6 +71,18 @@ const withLocalRepository = async (
 };
 
 describe("read-only local source suite", () => {
+  it("uses process-local safe.directory for WSL-compatible Git status", () => {
+    expect(
+      buildGitStatusArguments(String.raw`\\wsl.localhost\Ubuntu\repo`),
+    ).toEqual([
+      "-c",
+      "safe.directory=*",
+      "-C",
+      String.raw`\\wsl.localhost\Ubuntu\repo`,
+      "status",
+      "--porcelain=v1",
+    ]);
+  });
   it("loads a manifest and reads only its declared line range", async () => {
     await withLocalRepository(async ({ manifestPath }) => {
       const manifest = await loadLocalSourceManifest(manifestPath);

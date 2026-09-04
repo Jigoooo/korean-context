@@ -34,6 +34,20 @@ const privacyPatterns: ReadonlyArray<{
   { rule: "private-branch", pattern: /\bfeat\/dashboard-widgets\b/iu },
 ];
 
+export function redactPrivateText(text: string): string {
+  return text
+    .replace(
+      /(?:\\{2,}|\/{2,})wsl(?:\.localhost|\$)[\\/]+[^\\/\s"']+[\\/]+home[\\/]+[^\\/\s"']+/giu,
+      "<redacted-wsl-path>",
+    )
+    .replace(
+      /\b[A-Za-z]:[\\/]+Users[\\/]+[^\\/\s"']+/giu,
+      "<redacted-user-path>",
+    )
+    .replace(/\/(?:home|Users)\/[^/\s"']+/gu, "<redacted-user-path>")
+    .replace(/\boffen-asm-mvp\b/giu, "<redacted-repository>")
+    .replace(/\bfeat\/dashboard-widgets\b/giu, "<redacted-branch>");
+}
 export function findPrivacyViolations(
   text: string,
   source: string,

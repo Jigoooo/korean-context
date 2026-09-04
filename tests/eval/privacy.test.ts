@@ -6,6 +6,7 @@ import { describe, expect, it } from "vitest";
 
 import {
   findPrivacyViolations,
+  redactPrivateText,
   validatePublicV02Artifacts,
 } from "../../src/eval/privacy.js";
 import { V02EvalCaseSchema } from "../../src/eval/v02-schema.js";
@@ -35,6 +36,21 @@ describe("public v0.2 privacy validation", () => {
     ).toEqual([]);
   });
 
+  it.each([
+    String.raw`C:\Users\alice\.codex\logs`,
+    String.raw`\\wsl.localhost\Ubuntu\home\alice\repo`,
+    "/home/alice/repo",
+    "offen-asm-mvp feat/dashboard-widgets",
+  ])(
+    "redacts private infrastructure text before public storage: %s",
+    (text) => {
+      const redacted = redactPrivateText(`warning: ${text}`);
+
+      expect(findPrivacyViolations(redacted, "stderr")).toEqual([]);
+      expect(redacted).not.toContain("alice");
+      expect(redacted).toContain("<redacted-");
+    },
+  );
   it("reports each matching line without copying private text", () => {
     const violations = findPrivacyViolations(
       ["안전한 첫 줄", String.raw`C:\Users\alice\secret`].join("\n"),

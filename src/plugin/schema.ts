@@ -14,7 +14,9 @@ export async function validatePlugin(root: string): Promise<ValidationResult> {
     errors.push("plugin name must match its folder");
   if (
     typeof manifest.version !== "string" ||
-    !/^\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?$/u.test(manifest.version)
+    !/^(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$/u.test(
+      manifest.version,
+    )
   )
     errors.push("version must be strict SemVer");
   const interfaceValue = manifest.interface as
