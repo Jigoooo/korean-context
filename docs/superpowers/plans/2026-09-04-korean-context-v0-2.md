@@ -1085,6 +1085,7 @@ git commit -m "test(eval): v0.2 공개 평가 세트 완성"
 **Files:**
 
 - Create: `src/eval/local-suite.ts`
+- Create: `src/eval/local-audit.ts`
 - Create: `src/eval/local-audit-cli.ts`
 - Create: `tests/eval/local-suite.test.ts`
 - Create: `docs/evals/v0.2-local-audit.md`
@@ -1096,7 +1097,7 @@ git commit -m "test(eval): v0.2 공개 평가 세트 완성"
 - Consumes: an ignored local manifest, `executeCodexPrompt()`, and append-only run storage.
 - Produces: `loadLocalSourceManifest()`, `readLocalSourceContext()`, and `pnpm eval:v0.2:local`.
 - Writes only under an explicit output path whose default is `.local/evals/v0.2/`.
-- [ ] **Step 1: Write path containment and read-only tests**
+- [x] **Step 1: Write path containment and read-only tests**
 
 Create `tests/eval/local-suite.test.ts` with these assertions:
 
@@ -1115,14 +1116,14 @@ await expect(
 
 Also reject absolute Windows, WSL, and POSIX paths in `relativePath`. Hash every temporary source file before and after a stubbed local run and expect identical hashes.
 
-- [ ] **Step 2: Run the focused test and confirm failure**
+- [x] **Step 2: Run the focused test and confirm failure**
 
 ```powershell
 pnpm vitest run tests/eval/local-suite.test.ts
 ```
 
 Expected: FAIL because `local-suite.ts` does not exist.
-- [ ] **Step 3: Implement the local source manifest**
+- [x] **Step 3: Implement the local source manifest**
 
 Create `src/eval/local-suite.ts` with a Zod schema containing `repositoryRoot`, `baseRef`, and cases with `id`, `relativePath`, `startLine`, `endLine`, `surface`, `domain`, `instruction`, `projectVocabulary`, `protectedTokens`, and `repeatCount`. Export:
 
@@ -1136,7 +1137,7 @@ export async function readLocalSourceContext(
 
 Resolve the repository root and candidate path before reading. Require the final candidate path to remain inside the root, require positive line numbers with `endLine >= startLine`, and reject missing or binary files.
 
-- [ ] **Step 4: Implement the local audit CLI**
+- [x] **Step 4: Implement the local audit CLI**
 
 Add `"eval:v0.2:local": "tsx src/eval/local-audit-cli.ts"` to `package.json`. `src/eval/local-audit-cli.ts` accepts:
 
@@ -1150,11 +1151,11 @@ Add `"eval:v0.2:local": "tsx src/eval/local-audit-cli.ts"` to `package.json`. `s
 
 Build prompts from the declared instruction and exact line range, run Codex with `--sandbox read-only --cd <repositoryRoot>`, and append results under `.local/`. Capture `git status --porcelain` before and after; fail the local audit if the source worktree changes.
 
-- [ ] **Step 5: Write the local runbook**
+- [x] **Step 5: Write the local runbook**
 
 `docs/evals/v0.2-local-audit.md` documents the ignored manifest shape, read-only guarantee, allowed source types, result location, status-before/status-after check, and the rule that no raw local output is copied into public results.
 
-- [ ] **Step 6: Run focused and full tests**
+- [x] **Step 6: Run focused and full tests**
 
 ```powershell
 pnpm vitest run tests/eval/local-suite.test.ts tests/eval/v02-codex-runner.test.ts
@@ -1163,10 +1164,10 @@ pnpm check
 
 Expected: PASS; the test repository hashes and Git status remain unchanged.
 
-- [ ] **Step 7: Update the roadmap and commit**
+- [x] **Step 7: Update the roadmap and commit**
 
 ```powershell
-git add src/eval/local-suite.ts src/eval/local-audit-cli.ts tests/eval/local-suite.test.ts docs/evals/v0.2-local-audit.md package.json ROADMAP.md
+git add src/eval/local-suite.ts src/eval/local-audit.ts src/eval/local-audit-cli.ts tests/eval/local-suite.test.ts docs/evals/v0.2-local-audit.md package.json docs/superpowers/plans/2026-09-04-korean-context-v0-2.md ROADMAP.md
 git commit -m "feat(eval): 로컬 저장소 읽기 전용 검사 추가"
 ```
 ---

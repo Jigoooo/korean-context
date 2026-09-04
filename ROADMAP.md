@@ -6,11 +6,11 @@
 
 **Current milestone:** v0.2 — Offen-based real-world quality validation
 
-**Detailed progress:** v0.2 implementation tasks 8/12 complete; Tasks 9–12 remain.
+**Detailed progress:** v0.2 implementation tasks 9/12 complete; Tasks 10–12 remain.
 
 **V1 outlook:** Milestone 0 is complete, Milestone 1 is in progress, and Milestones 2–5 remain.
 
-**Next task:** Execute Task 9 in `docs/superpowers/plans/2026-09-04-korean-context-v0-2.md`: add the read-only local repository audit runner.
+**Next task:** Execute Task 10 in `docs/superpowers/plans/2026-09-04-korean-context-v0-2.md`: run local stress tests and collect public raw results.
 
 **V1 supported agents:** Codex and Claude Code only
 
@@ -191,6 +191,8 @@ git rev-list --left-right --count main...origin/main
 ```
 
 ## Session log
+
+- 2026-09-04 — Completed v0.2 Task 9 on `feat/v0.2-eval-foundation`: added strict local source manifests, real-path containment, UTF-8 line-range reads, source hashing, append-only resume, and per-attempt source/Git immutability checks. Added the `.local`-only CLI and runbook. Verified 18 focused local and Codex runner tests, then passed the full check with 174 tests. Next work is Task 10.
 
 - 2026-09-04 — Completed v0.2 Task 8 on `feat/v0.2-eval-foundation`: added 10 project-conflict, 10 long-artifact, five format, and five conversation-boundary cases; added the synthetic vocabulary, UI, and docs context plus the production manifest. The complete public suite now contains 60 cases, 20 repeated cases, and 160 cases with v0.1. `pnpm check` now includes v0.2 suite and privacy validation. Verified 33 focused tests, then passed the full check with 163 tests. Next work is Task 9.
 
