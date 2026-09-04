@@ -775,9 +775,10 @@ git commit -m "feat(eval): v0.2 자동 실패 판정 추가"
 
 - Consumes: loaded suite, effective runs, automatic evaluations, manual scores, and v0.1 regression runs.
 - Produces: `V02EvalScoreSchema`, `summarizeV02Scores()`, `evaluateV02ReleaseGate()`.
+- Produces: `parseScoreV02Arguments()` and `loadV02Scores()` for deterministic CLI paths and line-aware JSONL validation.
 - Produces command: `pnpm eval:v0.2:score`.
 
-- [ ] **Step 1: Write gate tests for every threshold**
+- [x] **Step 1: Write gate tests for every threshold**
 
 Create `tests/eval/v02-score.test.ts` with a complete passing fixture, then mutate one condition per test:
 
@@ -809,7 +810,7 @@ it("enforces percentage thresholds", () => {
 });
 ```
 
-- [ ] **Step 2: Run the focused test and confirm failure**
+- [x] **Step 2: Run the focused test and confirm failure**
 
 ```powershell
 pnpm vitest run tests/eval/v02-score.test.ts
@@ -817,7 +818,7 @@ pnpm vitest run tests/eval/v02-score.test.ts
 
 Expected: FAIL because `v02-score.ts` does not exist.
 
-- [ ] **Step 3: Implement the versioned score schema**
+- [x] **Step 3: Implement the versioned score schema**
 
 Create `src/eval/v02-score.ts`:
 
@@ -855,7 +856,7 @@ export const V02EvalScoreSchema = z
 ```
 
 Export `V02EvalScore` and define `V02ReleaseGateInput` from imported schema types instead of duplicating their shapes.
-- [ ] **Step 4: Implement release-gate aggregation**
+- [x] **Step 4: Implement release-gate aggregation**
 
 ```ts
 export type V02ReleaseGateInput = {
@@ -886,7 +887,9 @@ export function evaluateV02ReleaseGate(
 
 Require complete attempts for every v0.2 case, one execution configuration per mode, 100 successful v0.1 explicit regression runs, automatic evaluations for every v0.2 run, and a manual score for every run selected by the scoring protocol. Baseline language violations remain comparison evidence; baseline infrastructure, privacy, completeness, and empty-output failures still block the run. Count explicit hard failures toward release and treat a repeated explicit case as unstable if any attempt has a hard failure even when another attempt passes.
 
-- [ ] **Step 5: Update the rubric and score CLI**
+Calculate score rates from the 100 expected explicit attempts. Combine manual and automatic format failures by composite key, count each explicit hard-failure attempt once, and exclude gold corrections from attempts with any hard failure. Require one `goldIssuesTotal` value per case across both modes and all attempts; baseline scores must keep `improvedOverBaseline: false`.
+
+- [x] **Step 5: Update the rubric and score CLI**
 
 Add v0.2 boolean definitions, gold-issue rules, blind-mode review, and second-review rules to `evals/rubric.md`. Add `"eval:v0.2:score": "tsx src/eval/score-v02-cli.ts"` to `package.json`. `src/eval/score-v02-cli.ts` accepts these explicit paths:
 
@@ -901,7 +904,7 @@ Add v0.2 boolean definitions, gold-issue rules, blind-mode review, and second-re
 
 Print the JSON gate result and exit 1 when `passed` is false.
 
-- [ ] **Step 6: Run score, legacy, and type tests**
+- [x] **Step 6: Run score, legacy, and type tests**
 
 ```powershell
 pnpm vitest run tests/eval/v02-score.test.ts tests/eval/score.test.ts
@@ -910,10 +913,10 @@ pnpm typecheck
 
 Expected: PASS; the v0.1 score schema and summary remain unchanged.
 
-- [ ] **Step 7: Update the roadmap and commit**
+- [x] **Step 7: Update the roadmap and commit**
 
 ```powershell
-git add src/eval/v02-score.ts src/eval/score-v02-cli.ts tests/eval/v02-score.test.ts evals/rubric.md package.json ROADMAP.md
+git add src/eval/v02-score.ts src/eval/score-v02-cli.ts tests/eval/v02-score.test.ts evals/rubric.md package.json docs/superpowers/plans/2026-09-04-korean-context-v0-2.md ROADMAP.md
 git commit -m "feat(eval): v0.2 릴리스 게이트 추가"
 ```
 

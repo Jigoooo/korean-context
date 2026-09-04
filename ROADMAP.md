@@ -6,11 +6,11 @@
 
 **Current milestone:** v0.2 — Offen-based real-world quality validation
 
-**Detailed progress:** v0.2 implementation tasks 5/12 complete; Tasks 6–12 remain.
+**Detailed progress:** v0.2 implementation tasks 6/12 complete; Tasks 7–12 remain.
 
 **V1 outlook:** Milestone 0 is complete, Milestone 1 is in progress, and Milestones 2–5 remain.
 
-**Next task:** Execute Task 6 in `docs/superpowers/plans/2026-09-04-korean-context-v0-2.md`: add manual score validation and the v0.2 release gate.
+**Next task:** Execute Task 7 in `docs/superpowers/plans/2026-09-04-korean-context-v0-2.md`: author the 20 repair and 10 preserve cases.
 
 **V1 supported agents:** Codex and Claude Code only
 
@@ -83,7 +83,7 @@ Before session end:
 - [x] Review the written v0.2 design and approve the implementation-plan transition.
 - [x] Add a task-level v0.2 implementation plan linked here.
 - [x] Extend the case schema with register, project vocabulary, protected meaning, forbidden behavior, and anonymized provenance.
-- [ ] Define scoring for detection, rewrite quality, meaning preservation, project-style preservation, format adherence, and unnecessary edits.
+- [x] Define scoring for detection, rewrite quality, meaning preservation, project-style preservation, format adherence, and unnecessary edits.
 - [x] Define deterministic hard failures before collecting model results.
 
 ### 1.2 Offen-derived fixture
@@ -191,6 +191,8 @@ git rev-list --left-right --count main...origin/main
 ```
 
 ## Session log
+
+- 2026-09-04 — Completed v0.2 Task 6 on `feat/v0.2-eval-foundation`: added strict v0.2 manual scores, complete-attempt and configuration gates, v0.1 regression enforcement, explicit-only quality thresholds, hard-failure variance, score JSONL loading, and the score CLI. Updated the rubric with boolean, gold issue, blind-review, and second-review rules. Verified 28 focused v0.2/v0.1 score tests, then passed the full check with 153 tests. Next work is Task 7.
 
 - 2026-09-04 — Completed v0.2 Task 5 on `feat/v0.2-eval-foundation`: added deterministic run-status, empty-output, protected-token, substring, regular-expression, project-vocabulary, and required-format violations. Suite validation now rejects invalid patterns and ambiguous `exact-output` definitions before model evaluation. Verified 40 focused tests, then passed the full check with 127 tests. Next work is Task 6.
 

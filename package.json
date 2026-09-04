@@ -17,6 +17,7 @@
     "eval:validate": "tsx src/eval/validate-cli.ts",
     "eval:v0.2:validate": "tsx src/eval/validate-v02-cli.ts",
     "eval:v0.2:run": "tsx src/eval/run-v02-cli.ts",
+    "eval:v0.2:score": "tsx src/eval/score-v02-cli.ts",
     "eval:run": "tsx src/eval/run-cli.ts",
     "eval:score": "tsx src/eval/score-cli.ts",
     "plugin:validate": "tsx src/plugin/validate-cli.ts",
