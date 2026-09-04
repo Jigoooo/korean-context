@@ -6,7 +6,7 @@
 
 **Current milestone:** v0.2 — Offen-based real-world quality validation
 
-**Next task:** Define the anonymized real-world evaluation set and scoring contract.
+**Next task:** Review and approve `docs/superpowers/specs/2026-09-04-korean-context-v0-2-design.md`, then write the implementation plan.
 
 **V1 supported agents:** Codex and Claude Code only
 
@@ -73,7 +73,9 @@ Before session end:
 
 ### 1.1 Evaluation contract
 
-- [ ] Add a v0.2 design and implementation plan linked here.
+- [x] Add a v0.2 design spec reflecting the approved evaluation architecture and release gates.
+- [ ] Review the written v0.2 design and approve the implementation-plan transition.
+- [ ] Add a task-level v0.2 implementation plan linked here.
 - [ ] Extend the case schema with register, project vocabulary, protected meaning, forbidden behavior, and anonymized provenance.
 - [ ] Define scoring for detection, rewrite quality, meaning preservation, project-style preservation, format adherence, and unnecessary edits.
 - [ ] Define deterministic hard failures before collecting model results.
@@ -183,4 +185,5 @@ git rev-list --left-right --count main...origin/main
 
 ## Session log
 
+- 2026-09-04 — Approved the hybrid public-fixture and local-Offen evaluation architecture, the 160-case structure, scoring, repetition, error handling, and release gates. Wrote the v0.2 design spec; implementation has not started.
 - 2026-09-04 — Restricted V1 support to Codex and Claude Code. Selected v0.2 real-world validation before v0.3 Claude Code support. Verified `pnpm check` with 44 passing tests and confirmed the latest `main` CI succeeded. Created this canonical tracker; v0.2 implementation has not started.
