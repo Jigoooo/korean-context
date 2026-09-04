@@ -1,4 +1,4 @@
-import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
@@ -151,6 +151,33 @@ describe("v0.2 suite validation", () => {
     }
   });
 
+  it("rejects an invalid automatic-check pattern before evaluation", async () => {
+    const root = await mkdtemp(join(tmpdir(), "korean-context-pattern-"));
+    try {
+      const manifestPath = await writeSuite(
+        root,
+        "engineering-line-writing-001",
+      );
+      const casePath = join(root, "evals", "cases", "v0.2", "repair.jsonl");
+      const lines = (await readFile(casePath, "utf8")).trimEnd().split("\n");
+      const first = JSON.parse(lines[0] as string) as V02EvalCase;
+      first.automaticChecks.requiredPatterns = ["("];
+      lines[0] = JSON.stringify(first);
+      await writeFile(casePath, `${lines.join("\n")}\n`, "utf8");
+
+      await expect(
+        validateV02Suite({
+          root,
+          manifestPath,
+          sourcesPath: "research/sources.yml",
+        }),
+      ).rejects.toThrow(
+        "Invalid required pattern in v02-real-world-repair-001: (",
+      );
+    } finally {
+      await rm(root, { force: true, recursive: true });
+    }
+  });
   it("rejects a manifest outside the public v0.2 case directory", async () => {
     const root = await mkdtemp(join(tmpdir(), "korean-context-root-"));
     const outside = await mkdtemp(join(tmpdir(), "korean-context-outside-"));

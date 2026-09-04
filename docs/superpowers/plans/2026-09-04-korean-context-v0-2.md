@@ -656,14 +656,17 @@ git commit -m "feat(eval): 반복 가능한 Codex 실행기 추가"
 
 - Create: `src/eval/hard-failures.ts`
 - Create: `tests/eval/hard-failures.test.ts`
+- Modify: `src/eval/validate-v02.ts`
+- Modify: `tests/eval/validate-v02.test.ts`
 - Modify: `ROADMAP.md`
 
 **Interfaces:**
 
 - Consumes: `V02EvalCase` and an effective `V02EvalRun`.
 - Produces: `evaluateAutomaticChecks(evalCase, run): AutomaticEvaluation`.
+- Produces: `validateAutomaticCheckDefinitions(evalCase)` for guarded pattern compilation and `exact-output` configuration validation.
 
-- [ ] **Step 1: Write one failing test per deterministic rule**
+- [x] **Step 1: Write one failing test per deterministic rule**
 
 Create `tests/eval/hard-failures.test.ts` with independent cases for protected tokens, required and forbidden substrings, valid and invalid regular expressions, forbidden project vocabulary, empty output, non-completed status, and each supported format.
 
@@ -696,14 +699,14 @@ it("reports every violation without stopping at the first", () => {
 });
 ```
 
-- [ ] **Step 2: Run the focused test and confirm failure**
+- [x] **Step 2: Run the focused test and confirm failure**
 
 ```powershell
 pnpm vitest run tests/eval/hard-failures.test.ts
 ```
 
 Expected: FAIL because `hard-failures.ts` does not exist.
-- [ ] **Step 3: Implement explicit violation records**
+- [x] **Step 3: Implement explicit violation records**
 
 Create `src/eval/hard-failures.ts`:
 
@@ -738,9 +741,9 @@ export function evaluateAutomaticChecks(
 ): AutomaticEvaluation;
 ```
 
-Compile declared patterns in a guarded helper and reject invalid patterns during suite validation. Implement deterministic checks for `single-line`, `bullet-list`, `markdown-table`, `commit-subject`, and `exact-output`. Do not guess naturalness or technical meaning with regular expressions.
+Compile declared patterns in a guarded helper and reject invalid patterns during suite validation. Implement deterministic checks for `single-line`, `bullet-list`, `markdown-table`, `commit-subject`, and `exact-output`. Because the schema has no separate expected-output field, `exact-output` requires exactly one `requiredSubstrings` value and compares the complete output against it. Do not guess naturalness or technical meaning with regular expressions.
 
-- [ ] **Step 4: Run focused and schema tests**
+- [x] **Step 4: Run focused and schema tests**
 
 ```powershell
 pnpm vitest run tests/eval/hard-failures.test.ts tests/eval/v02-suite.test.ts
@@ -749,10 +752,10 @@ pnpm typecheck
 
 Expected: PASS with every violation type independently covered.
 
-- [ ] **Step 5: Update the roadmap and commit**
+- [x] **Step 5: Update the roadmap and commit**
 
 ```powershell
-git add src/eval/hard-failures.ts tests/eval/hard-failures.test.ts ROADMAP.md
+git add src/eval/hard-failures.ts src/eval/validate-v02.ts tests/eval/hard-failures.test.ts tests/eval/validate-v02.test.ts docs/superpowers/plans/2026-09-04-korean-context-v0-2.md ROADMAP.md
 git commit -m "feat(eval): v0.2 자동 실패 판정 추가"
 ```
 ---

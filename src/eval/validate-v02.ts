@@ -1,5 +1,6 @@
 import { isAbsolute, join, relative, resolve } from "node:path";
 
+import { validateAutomaticCheckDefinitions } from "./hard-failures.js";
 import { loadV02Suite } from "./load-v02-suite.js";
 import { validatePublicV02Artifacts } from "./privacy.js";
 import { loadSources } from "../research/load-sources.js";
@@ -68,6 +69,7 @@ export async function validateV02Suite(
   const knownSourceIds = new Set(sources.map((source) => source.id));
 
   for (const evalCase of cases) {
+    validateAutomaticCheckDefinitions(evalCase);
     for (const sourceId of evalCase.sourceIds) {
       if (!knownSourceIds.has(sourceId)) {
         throw new Error(

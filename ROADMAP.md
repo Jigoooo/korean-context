@@ -6,7 +6,11 @@
 
 **Current milestone:** v0.2 — Offen-based real-world quality validation
 
-**Next task:** Execute Task 5 in `docs/superpowers/plans/2026-09-04-korean-context-v0-2.md`: add deterministic hard-failure checks.
+**Detailed progress:** v0.2 implementation tasks 5/12 complete; Tasks 6–12 remain.
+
+**V1 outlook:** Milestone 0 is complete, Milestone 1 is in progress, and Milestones 2–5 remain.
+
+**Next task:** Execute Task 6 in `docs/superpowers/plans/2026-09-04-korean-context-v0-2.md`: add manual score validation and the v0.2 release gate.
 
 **V1 supported agents:** Codex and Claude Code only
 
@@ -80,7 +84,7 @@ Before session end:
 - [x] Add a task-level v0.2 implementation plan linked here.
 - [x] Extend the case schema with register, project vocabulary, protected meaning, forbidden behavior, and anonymized provenance.
 - [ ] Define scoring for detection, rewrite quality, meaning preservation, project-style preservation, format adherence, and unnecessary edits.
-- [ ] Define deterministic hard failures before collecting model results.
+- [x] Define deterministic hard failures before collecting model results.
 
 ### 1.2 Offen-derived fixture
 
@@ -187,6 +191,8 @@ git rev-list --left-right --count main...origin/main
 ```
 
 ## Session log
+
+- 2026-09-04 — Completed v0.2 Task 5 on `feat/v0.2-eval-foundation`: added deterministic run-status, empty-output, protected-token, substring, regular-expression, project-vocabulary, and required-format violations. Suite validation now rejects invalid patterns and ambiguous `exact-output` definitions before model evaluation. Verified 40 focused tests, then passed the full check with 127 tests. Next work is Task 6.
 
 - 2026-09-04 — Completed v0.2 Task 4 on `feat/v0.2-eval-foundation`: added the shared shell-free Codex process boundary, controlled `xhigh` execution, deterministic fixture and prompt hashes, compatible run manifests, append-only resume and timestamped reset backups, plus single-attempt v0.1 regression execution. Verified 37 focused runner and storage tests, then passed the full check with 108 tests. Confirmed the adapter against the current official CLI/configuration references and local `codex-cli 0.147.0`. Next work is Task 5.
 
