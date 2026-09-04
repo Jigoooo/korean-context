@@ -6,7 +6,7 @@
 
 **Current milestone:** v0.2 — Offen-based real-world quality validation
 
-**Next task:** Execute Task 2 in `docs/superpowers/plans/2026-09-04-korean-context-v0-2.md`: add public-evaluation privacy and suite validation.
+**Next task:** Execute Task 3 in `docs/superpowers/plans/2026-09-04-korean-context-v0-2.md`: add append-only v0.2 result storage.
 
 **V1 supported agents:** Codex and Claude Code only
 
@@ -188,6 +188,7 @@ git rev-list --left-right --count main...origin/main
 
 ## Session log
 
+- 2026-09-04 — Completed v0.2 Task 2 on `feat/v0.2-eval-foundation`: added relative-path privacy findings, recursive public artifact validation, source-link orchestration, a thin validation CLI, `.local/` exclusion, and the `eval:v0.2:validate` script. Verified 31 focused tests, then passed the full check with 75 tests. Next work is Task 3.
 - 2026-09-04 — Completed v0.2 Task 1 on `feat/v0.2-eval-foundation`: added strict versioned case/manifest schemas and a manifest-driven loader while preserving the v0.1 loader. Verified 23 focused and v0.1 regression tests, then passed the full check with 59 tests. Next work is Task 2.
 - 2026-09-04 — Approved the written v0.2 design and added a 12-task test-driven implementation plan. Self-review confirmed complete task numbering, explicit interfaces, v0.1 compatibility, public/local isolation, and baseline/explicit gate separation. Next work is Task 1; implementation has not started.
 - 2026-09-04 — Approved the hybrid public-fixture and local-Offen evaluation architecture, the 160-case structure, scoring, repetition, error handling, and release gates. Wrote the v0.2 design spec; implementation has not started.

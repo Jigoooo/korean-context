@@ -29,6 +29,7 @@
 - `src/eval/v02-schema.ts`: v0.2 case and manifest schemas.
 - `src/eval/load-v02-suite.ts`: manifest-driven suite loader and distribution checks.
 - `src/eval/privacy.ts`: public-case, fixture, and result privacy validation.
+- `src/eval/validate-v02.ts`: v0.2 suite, source-link, and privacy validation orchestration.
 - `src/eval/validate-v02-cli.ts`: deterministic v0.2 suite validation entry point.
 - `src/eval/v02-result-schema.ts`: versioned run manifest and attempt schemas.
 - `src/eval/run-store.ts`: append-only read, write, resume, and effective-record helpers.
@@ -228,8 +229,10 @@ git commit -m "feat(eval): v0.2 평가 스키마 추가"
 **Files:**
 
 - Create: `src/eval/privacy.ts`
+- Create: `src/eval/validate-v02.ts`
 - Create: `src/eval/validate-v02-cli.ts`
 - Create: `tests/eval/privacy.test.ts`
+- Create: `tests/eval/validate-v02.test.ts`
 - Modify: `.gitignore`
 - Modify: `package.json`
 - Modify: `ROADMAP.md`
@@ -239,9 +242,10 @@ git commit -m "feat(eval): v0.2 평가 스키마 추가"
 - Consumes: `loadV02Suite()` from Task 1.
 - Produces: `findPrivacyViolations(text: string, source: string): PrivacyViolation[]`.
 - Produces: `validatePublicV02Artifacts(root: string): Promise<void>`.
+- Produces: `validateV02Suite(options: ValidateV02Options): Promise<V02ValidationSummary>` and `parseValidateV02Arguments()`.
 - Produces command: `pnpm eval:v0.2:validate`.
 
-- [ ] **Step 1: Write privacy tests before implementation**
+- [x] **Step 1: Write privacy tests before implementation**
 
 Create `tests/eval/privacy.test.ts`:
 
@@ -266,9 +270,9 @@ it("allows portable synthetic paths and project vocabulary", () => {
 });
 ```
 
-Add tests that reject `privacyReviewed: false`, scan all manifest-declared JSONL and fixture files, and report `path:line` without echoing surrounding private content.
+Add tests that reject `privacyReviewed: false`, scan all manifest-declared JSONL and fixture files, and report `path:line` without echoing surrounding private content. Create `tests/eval/validate-v02.test.ts` to validate a complete temporary 60-case suite, reject unknown source IDs, run privacy checks, resolve CLI paths, and reject missing option values.
 
-- [ ] **Step 2: Run the test and confirm the missing-module failure**
+- [x] **Step 2: Run the test and confirm the missing-module failure**
 
 ```powershell
 pnpm vitest run tests/eval/privacy.test.ts
@@ -276,7 +280,7 @@ pnpm vitest run tests/eval/privacy.test.ts
 
 Expected: FAIL because `privacy.ts` does not exist.
 
-- [ ] **Step 3: Implement privacy validation**
+- [x] **Step 3: Implement privacy validation**
 
 Create `src/eval/privacy.ts` with a narrow rule set:
 
@@ -302,9 +306,9 @@ export async function validatePublicV02Artifacts(root: string): Promise<void>;
 
 Scan only `evals/cases/v0.2`, `evals/fixtures/v0.2`, and committed `evals/results/v0.2`. Do not scan the design documents, which intentionally describe the source of the methodology. Never include the matched private text in an error message.
 
-- [ ] **Step 4: Add the validation CLI and scripts**
+- [x] **Step 4: Add the validation CLI and scripts**
 
-`src/eval/validate-v02-cli.ts` must load the manifest, validate source IDs against `research/sources.yml`, run the privacy scan, and print:
+`src/eval/validate-v02.ts` loads the manifest, validates source IDs against `research/sources.yml`, and runs the privacy scan. It rejects a manifest outside `<root>/evals/cases/v0.2` before reading suite data. `src/eval/validate-v02-cli.ts` only parses paths, invokes that function, and prints:
 
 ```text
 Validated v0.2 suite: 60 cases, 20 repeated, privacy checks passed
@@ -322,20 +326,20 @@ Tasks 4, 6, and 9 add their scripts only when the corresponding CLI file exists.
 
 Add `.local/` to `.gitignore`. Do not weaken the existing `.env` rules.
 
-- [ ] **Step 5: Run focused and full deterministic checks**
+- [x] **Step 5: Run focused and full deterministic checks**
 
 ```powershell
-pnpm vitest run tests/eval/privacy.test.ts tests/eval/v02-suite.test.ts
+pnpm vitest run tests/eval/privacy.test.ts tests/eval/validate-v02.test.ts tests/eval/v02-suite.test.ts
 pnpm typecheck
 git diff --check
 ```
 
 Expected: all tests pass; typecheck exits 0; no whitespace errors.
 
-- [ ] **Step 6: Update the roadmap and commit**
+- [x] **Step 6: Update the roadmap and commit**
 
 ```powershell
-git add src/eval/privacy.ts src/eval/validate-v02-cli.ts tests/eval/privacy.test.ts .gitignore package.json ROADMAP.md
+git add src/eval/privacy.ts src/eval/validate-v02.ts src/eval/validate-v02-cli.ts tests/eval/privacy.test.ts tests/eval/validate-v02.test.ts .gitignore package.json ROADMAP.md
 git commit -m "feat(eval): 공개 평가 개인정보 검사 추가"
 ```
 
