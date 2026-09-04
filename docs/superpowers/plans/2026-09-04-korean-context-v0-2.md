@@ -359,7 +359,7 @@ git commit -m "feat(eval): 공개 평가 개인정보 검사 추가"
 - Produces: `V02RunManifestSchema`, `V02EvalRunSchema`, `V02RunManifest`, `V02EvalRun`.
 - Produces: `v02RunKey()`, `loadV02Runs()`, `effectiveV02Runs()`, `successfulV02RunKeys()`, `appendV02Run()`.
 
-- [ ] **Step 1: Write append-only and resume tests**
+- [x] **Step 1: Write append-only and resume tests**
 
 Create `tests/eval/run-store.test.ts` with a temporary result file:
 
@@ -383,7 +383,7 @@ it("never treats timeout, interruption, or empty output as successful", () => {
 });
 ```
 
-- [ ] **Step 2: Run the focused test and confirm failure**
+- [x] **Step 2: Run the focused test and confirm failure**
 
 ```powershell
 pnpm vitest run tests/eval/run-store.test.ts
@@ -391,7 +391,7 @@ pnpm vitest run tests/eval/run-store.test.ts
 
 Expected: FAIL because the v0.2 result modules do not exist.
 
-- [ ] **Step 3: Implement versioned run records**
+- [x] **Step 3: Implement versioned run records**
 
 Create `src/eval/v02-result-schema.ts` around these fields:
 
@@ -415,7 +415,7 @@ export const V02RunManifestSchema = z.object({
   codexVersion: z.string().min(1),
   model: z.string().min(1),
   reasoningEffort: z.string().min(1),
-  pluginVersion: z.string().nullable(),
+  pluginVersion: z.string().min(1).nullable(),
   fixtureHash: z.string().regex(/^[a-f0-9]{64}$/u),
   createdAt: z.iso.datetime(),
 }).strict();
@@ -431,7 +431,7 @@ export const V02EvalRunSchema = z.object({
   codexVersion: z.string().min(1),
   model: z.string().min(1),
   reasoningEffort: z.string().min(1),
-  pluginVersion: z.string().nullable(),
+  pluginVersion: z.string().min(1).nullable(),
   fixtureHash: z.string().regex(/^[a-f0-9]{64}$/u),
   promptHash: z.string().regex(/^[a-f0-9]{64}$/u),
   exitCode: z.number().int(),
@@ -440,7 +440,7 @@ export const V02EvalRunSchema = z.object({
 }).strict();
 ```
 
-- [ ] **Step 4: Implement append-only storage**
+- [x] **Step 4: Implement append-only storage**
 
 Create `src/eval/run-store.ts`:
 
@@ -455,9 +455,9 @@ export function successfulV02RunKeys(runs: V02EvalRun[]): Set<string>;
 export async function appendV02Run(path: string, run: V02EvalRun): Promise<void>;
 ```
 
-`effectiveV02Runs()` returns the last appended record per composite key while `loadV02Runs()` always returns every raw record. `appendV02Run()` creates the parent directory and appends one complete JSON line; it does not rewrite the file.
+`effectiveV02Runs()` returns the last appended record per composite key while `loadV02Runs()` always returns every raw record. `appendV02Run()` creates the parent directory and appends one complete JSON line; it does not rewrite the file. Appends to the same resolved path are serialized, and JSON or schema errors report the original file line even when blank lines are present.
 
-- [ ] **Step 5: Run focused tests and v0.1 runner regressions**
+- [x] **Step 5: Run focused tests and v0.1 runner regressions**
 
 ```powershell
 pnpm vitest run tests/eval/run-store.test.ts tests/eval/codex-runner.test.ts
@@ -466,7 +466,7 @@ pnpm typecheck
 
 Expected: PASS; existing v0.1 latest-attempt behavior remains unchanged in its own module.
 
-- [ ] **Step 6: Update the roadmap and commit**
+- [x] **Step 6: Update the roadmap and commit**
 
 ```powershell
 git add src/eval/v02-result-schema.ts src/eval/run-store.ts tests/eval/run-store.test.ts ROADMAP.md
