@@ -35,6 +35,7 @@
 - `src/eval/run-store.ts`: append-only read, write, resume, and effective-record helpers.
 - `src/eval/codex-process.ts`: shared shell-free Codex process invocation and event parsing.
 - `src/eval/v02-codex-runner.ts`: v0.2 prompt, attempt planning, and run creation.
+- `src/eval/run-v02.ts`: fixture hashing, run manifests, resume, reset, and orchestration.
 - `src/eval/run-v02-cli.ts`: resumable baseline/explicit execution CLI.
 - `src/eval/hard-failures.ts`: deterministic output checks and violation types.
 - `src/eval/v02-score.ts`: v0.2 manual score schema and release-gate aggregation.
@@ -482,8 +483,10 @@ git commit -m "feat(eval): v0.2 실행 결과 보존"
 
 - Create: `src/eval/codex-process.ts`
 - Create: `src/eval/v02-codex-runner.ts`
+- Create: `src/eval/run-v02.ts`
 - Create: `src/eval/run-v02-cli.ts`
 - Create: `tests/eval/v02-codex-runner.test.ts`
+- Create: `tests/eval/run-v02.test.ts`
 - Modify: `src/eval/codex-runner.ts`
 - Modify: `tests/eval/codex-runner.test.ts`
 - Modify: `package.json`
@@ -493,9 +496,12 @@ git commit -m "feat(eval): v0.2 실행 결과 보존"
 
 - Consumes: `V02EvalCase`, `V02EvalRun`, `appendV02Run()`, and `successfulV02RunKeys()`.
 - Produces: `executeCodexPrompt()`, `buildV02Prompt()`, `planV02Attempts()`, `runCodexV02Attempt()`.
+- Produces: `hashFixtureTree()`, `parseRunV02Arguments()`, `runV02Evaluation()`, reset backup, and compatible resume helpers.
 - Produces command: `pnpm eval:v0.2:run -- --mode baseline|explicit ...`.
 
-- [ ] **Step 1: Write runner tests before implementation**
+**Implementation note (2026-09-04):** Verified `codex exec` arguments against the current official CLI and configuration references and local `codex-cli 0.147.0`. The shared process request keeps `reasoningEffort` optional so the v0.1 runner continues to omit the effort override, while every v0.2 and v0.1-regression run passes the controlled effort explicitly. `V02RunExecutionContext` carries both the run manifest and fixture directory.
+
+- [x] **Step 1: Write runner tests before implementation**
 
 Add tests to `tests/eval/codex-runner.test.ts` proving the refactor still passes prompts on stdin, uses `shell: false`, selects the last `agent_message`, and leaves `buildPrompt()` unchanged.
 
@@ -517,13 +523,13 @@ it("adds the skill invocation only in explicit mode", () => {
 });
 
 it("records timeout without discarding stderr", async () => {
-  const run = await runCodexV02Attempt(attempt, metadata, timeoutExecutor);
+  const run = await runCodexV02Attempt(attempt, { metadata, fixtureDirectory }, timeoutExecutor);
   expect(run).toMatchObject({ status: "timeout", output: "" });
   expect(run.stderr).not.toBe("");
 });
 ```
 
-- [ ] **Step 2: Run the tests and confirm the new test fails**
+- [x] **Step 2: Run the tests and confirm the new test fails**
 
 ```powershell
 pnpm vitest run tests/eval/codex-runner.test.ts tests/eval/v02-codex-runner.test.ts
@@ -531,7 +537,7 @@ pnpm vitest run tests/eval/codex-runner.test.ts tests/eval/v02-codex-runner.test
 
 Expected: existing tests pass; the v0.2 test fails because its modules are missing.
 
-- [ ] **Step 3: Extract the shared Codex process boundary**
+- [x] **Step 3: Extract the shared Codex process boundary**
 
 Create `src/eval/codex-process.ts`:
 
@@ -539,7 +545,7 @@ Create `src/eval/codex-process.ts`:
 export type CodexProcessRequest = {
   prompt: string;
   model: string;
-  reasoningEffort: string;
+  reasoningEffort?: string;
   fixtureDirectory: string;
   timeoutMs: number;
 };
@@ -554,8 +560,15 @@ export type CodexProcessResult = {
 export type CommandExecutor = (
   file: string,
   args: string[],
-  options: { input: string; shell: false; timeout: number },
-) => Promise<{ exitCode: number; stdout: string; stderr: string }>;
+options: { input: string; shell: false; timeout: number },
+) => Promise<{
+  exitCode: number;
+  stdout: string;
+  stderr: string;
+  timedOut?: boolean;
+  isCanceled?: boolean;
+  isTerminated?: boolean;
+}>;
 
 export async function executeCodexPrompt(
   request: CodexProcessRequest,
@@ -565,7 +578,7 @@ export async function executeCodexPrompt(
 
 Invoke `codex exec --ephemeral --json --model <model> --sandbox read-only --cd <fixture> -` without a shell. Pass reasoning effort through `-c model_reasoning_effort=<value>`. Convert execa timeout and interruption errors into explicit statuses while retaining stderr. Refactor `runCodexCase()` to use this function without changing its public result shape.
 
-- [ ] **Step 4: Implement attempt planning and hashing**
+- [x] **Step 4: Implement attempt planning and hashing**
 
 Create `src/eval/v02-codex-runner.ts`:
 
@@ -586,18 +599,24 @@ export function buildV02Prompt(
   mode: V02Mode,
 ): string;
 
+export type V02RunExecutionContext = {
+  metadata: V02RunManifest;
+  fixtureDirectory: string;
+  timeoutMs?: number;
+};
+
 export async function runCodexV02Attempt(
   attempt: PlannedV02Attempt,
-  metadata: V02RunManifest,
+  context: V02RunExecutionContext,
   execute?: CommandExecutor,
 ): Promise<V02EvalRun>;
 ```
 
-Use SHA-256 over the normalized fixture tree for `fixtureHash` and the exact stdin prompt for `promptHash`. Baseline uses `pluginVersion: null`; explicit requires the exact plugin version.
+`run-v02.ts` computes SHA-256 over the normalized fixture tree for `fixtureHash`; the runner hashes the exact stdin prompt for `promptHash`. Baseline uses `pluginVersion: null`; explicit requires the exact plugin version.
 
-- [ ] **Step 5: Implement the resumable CLI**
+- [x] **Step 5: Implement the resumable CLI**
 
-Create `src/eval/run-v02-cli.ts` and add `"eval:v0.2:run": "tsx src/eval/run-v02-cli.ts"` to `package.json`. Support these required options:
+Create `src/eval/run-v02.ts` for testable orchestration, keep `src/eval/run-v02-cli.ts` as a thin entry point, and add `"eval:v0.2:run": "tsx src/eval/run-v02-cli.ts"` to `package.json`. Support these required options:
 
 ```text
 --mode baseline|explicit
@@ -613,20 +632,20 @@ Create `src/eval/run-v02-cli.ts` and add `"eval:v0.2:run": "tsx src/eval/run-v02
 
 Require `--plugin-version` only for explicit mode. The `v0.2` suite loads the manifest and honors `repeatCount`; `v0.1-regression` loads the existing 100 cases, permits explicit mode only, and plans one attempt per case. Refuse mixed model, effort, fixture hash, Codex version, or plugin version before any model call. Skip successful composite keys and append every new result. `--reset` renames existing data to `*.bak-<UTC timestamp>` instead of deleting it.
 
-- [ ] **Step 6: Run runner, type, and regression tests**
+- [x] **Step 6: Run runner, type, and regression tests**
 
 ```powershell
-pnpm vitest run tests/eval/v02-codex-runner.test.ts tests/eval/run-store.test.ts tests/eval/codex-runner.test.ts
+pnpm vitest run tests/eval/v02-codex-runner.test.ts tests/eval/run-v02.test.ts tests/eval/run-store.test.ts tests/eval/codex-runner.test.ts
 pnpm typecheck
 pnpm test
 ```
 
 Expected: all tests pass; unit tests make no real Codex calls.
 
-- [ ] **Step 7: Update the roadmap and commit**
+- [x] **Step 7: Update the roadmap and commit**
 
 ```powershell
-git add src/eval/codex-process.ts src/eval/v02-codex-runner.ts src/eval/run-v02-cli.ts src/eval/codex-runner.ts tests/eval/v02-codex-runner.test.ts tests/eval/codex-runner.test.ts package.json ROADMAP.md
+git add src/eval/codex-process.ts src/eval/v02-codex-runner.ts src/eval/run-v02.ts src/eval/run-v02-cli.ts src/eval/codex-runner.ts tests/eval/v02-codex-runner.test.ts tests/eval/run-v02.test.ts tests/eval/codex-runner.test.ts package.json ROADMAP.md
 git commit -m "feat(eval): 반복 가능한 Codex 실행기 추가"
 ```
 ---

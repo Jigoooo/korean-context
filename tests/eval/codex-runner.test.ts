@@ -43,6 +43,7 @@ describe("Codex evaluation runner", () => {
       return Promise.resolve({
         exitCode: 0,
         stdout: [
+          '{"type":"item.completed","item":{"type":"agent_message","text":"초안"}}',
           '{"type":"item.completed","item":{"type":"agent_message","text":"결과"}}',
           '{"type":"turn.completed"}',
         ].join("\n"),
@@ -61,6 +62,7 @@ describe("Codex evaluation runner", () => {
     expect(calls[0]?.[0]).toBe("codex");
     expect(calls[0]?.[1]).toContain("--ephemeral");
     expect(calls[0]?.[1]).toContain("gpt-5.6-sol");
+    expect(calls[0]?.[1]).not.toContain("model_reasoning_effort=xhigh");
     expect(calls[0]?.[2]).toMatchObject({
       input: "문구를 고쳐줘",
       shell: false,

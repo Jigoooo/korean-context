@@ -1,25 +1,12 @@
-import { execa } from "execa";
-
+import { executeCodexPrompt, type CommandExecutor } from "./codex-process.js";
 import type { EvalCase } from "./schema.js";
 import type { EvalMode, EvalRun } from "./result-schema.js";
 
-export type CommandResult = {
-  exitCode: number;
-  stdout: string;
-  stderr: string;
-};
-
-export type CommandOptions = {
-  input: string;
-  shell: false;
-  timeout: number;
-};
-
-export type CommandExecutor = (
-  file: string,
-  args: string[],
-  options: CommandOptions,
-) => Promise<CommandResult>;
+export type {
+  CommandExecutor,
+  CommandOptions,
+  CommandResult,
+} from "./codex-process.js";
 
 export type RunSummary = {
   total: number;
@@ -28,20 +15,6 @@ export type RunSummary = {
   model: string | null;
   codexVersion: string | null;
   completedAt: string;
-};
-
-const executeCommand: CommandExecutor = async (file, args, options) => {
-  const result = await execa(file, args, {
-    input: options.input,
-    reject: false,
-    shell: options.shell,
-    timeout: options.timeout,
-  });
-  return {
-    exitCode: result.exitCode ?? 1,
-    stdout: result.stdout,
-    stderr: result.stderr,
-  };
 };
 
 export function buildPrompt(input: string, mode: EvalMode): string {
@@ -78,60 +51,23 @@ export function summarizeRuns(runs: EvalRun[]): RunSummary {
   };
 }
 
-const parseJsonLines = (contents: string): Record<string, unknown>[] =>
-  contents
-    .split(/\r?\n/u)
-    .filter((line) => line.trim() !== "")
-    .flatMap((line) => {
-      try {
-        return [JSON.parse(line) as Record<string, unknown>];
-      } catch {
-        return [];
-      }
-    });
-
-const readAgentOutput = (events: Record<string, unknown>[]): string => {
-  const messages = events.flatMap((event) => {
-    if (event.type !== "item.completed" || typeof event.item !== "object") {
-      return [];
-    }
-    const item = event.item as Record<string, unknown>;
-    return item.type === "agent_message" && typeof item.text === "string"
-      ? [item.text]
-      : [];
-  });
-  return messages.at(-1) ?? "";
-};
-
 export async function runCodexCase(
   evalCase: Pick<EvalCase, "id" | "kind" | "input">,
   mode: EvalMode,
   codexVersion: string,
   model: string,
-  execute: CommandExecutor = executeCommand,
+  execute?: CommandExecutor,
 ): Promise<EvalRun> {
   const startedAt = new Date().toISOString();
-  const result = await execute(
-    "codex",
-    [
-      "exec",
-      "--ephemeral",
-      "--json",
-      "--model",
-      model,
-      "--sandbox",
-      "read-only",
-      "--cd",
-      "evals/fixtures/workspace",
-      "-",
-    ],
+  const result = await executeCodexPrompt(
     {
-      input: buildPrompt(evalCase.input, mode),
-      shell: false,
-      timeout: 180_000,
+      prompt: buildPrompt(evalCase.input, mode),
+      model,
+      fixtureDirectory: "evals/fixtures/workspace",
+      timeoutMs: 180_000,
     },
+    execute,
   );
-  const events = parseJsonLines(result.stdout);
 
   return {
     caseId: evalCase.id,
@@ -142,7 +78,7 @@ export async function runCodexCase(
     codexVersion,
     model,
     exitCode: result.exitCode,
-    output: readAgentOutput(events),
+    output: result.output,
     stderr: result.stderr,
   };
 }

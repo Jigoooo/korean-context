@@ -6,7 +6,7 @@
 
 **Current milestone:** v0.2 — Offen-based real-world quality validation
 
-**Next task:** Execute Task 4 in `docs/superpowers/plans/2026-09-04-korean-context-v0-2.md`: add the resumable v0.2 Codex runner.
+**Next task:** Execute Task 5 in `docs/superpowers/plans/2026-09-04-korean-context-v0-2.md`: add deterministic hard-failure checks.
 
 **V1 supported agents:** Codex and Claude Code only
 
@@ -187,6 +187,8 @@ git rev-list --left-right --count main...origin/main
 ```
 
 ## Session log
+
+- 2026-09-04 — Completed v0.2 Task 4 on `feat/v0.2-eval-foundation`: added the shared shell-free Codex process boundary, controlled `xhigh` execution, deterministic fixture and prompt hashes, compatible run manifests, append-only resume and timestamped reset backups, plus single-attempt v0.1 regression execution. Verified 37 focused runner and storage tests, then passed the full check with 108 tests. Confirmed the adapter against the current official CLI/configuration references and local `codex-cli 0.147.0`. Next work is Task 5.
 
 - 2026-09-04 — Completed v0.2 Task 3 on `feat/v0.2-eval-foundation`: added versioned run manifests and attempt records, append-only JSONL storage, composite resume keys, effective-record selection, successful-run filtering, same-file concurrent append serialization, and original JSONL line reporting. Verified 17 focused and v0.1 runner tests, then passed the full check with 88 tests. Next work is Task 4.
 - 2026-09-04 — Completed v0.2 Task 2 on `feat/v0.2-eval-foundation`: added relative-path privacy findings, recursive public artifact validation, source-link orchestration, a thin validation CLI, `.local/` exclusion, and the `eval:v0.2:validate` script. Verified 31 focused tests, then passed the full check with 75 tests. Next work is Task 3.
