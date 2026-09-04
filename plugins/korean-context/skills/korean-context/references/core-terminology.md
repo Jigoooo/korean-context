@@ -14,7 +14,12 @@
 - 프로젝트 용어집과 기존 산출물 표기가 기본값보다 우선한다.
 - 프로젝트가 정한 용어는 일반 영문 표현이나 익숙한 동의어로 되돌리지 않는다.
 - 프로젝트 용어를 요구한 산출물은 작성 전에 preferred와 forbidden 표현을 확인하고, 작성 후 preferred 개념이 남고 forbidden 표현이 없는지 한 번 더 검사한다.
-- prompt에 용어 매핑이 없으면 workspace에서 `vocabulary`, `terminology`, `용어`, `어휘`, `SSOT` 이름의 명시적 원본을 찾아 읽는다. 코드와 로그의 빈도만으로 관례를 추정하지 않는다.
+- prompt에 용어 매핑이 없고 요청이 workspace와 연결되어 있으면 초안을 쓰기 전에 아래 순서로 확인한다.
+  1. `<workspace>`는 현재 workspace root로 해석한다.
+  2. `vocabulary`, `terminology`, `glossary`, `wording`, `용어`, `어휘`, `SSOT` 이름의 원본을 파일명부터 찾는다.
+  3. 가장 작고 명시적인 원본에서 필요한 preferred와 forbidden 표현을 읽는다.
+  4. 원본의 매핑을 적용한 뒤에만 산출물을 작성한다.
+- 코드와 로그의 빈도만으로 관례를 추정하지 않는다.
 - 용어 하나를 문서 전체에서 기계적으로 치환하지 않는다.
 
 ## Counterexamples
