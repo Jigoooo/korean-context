@@ -1276,30 +1276,30 @@ git commit -m "test(eval): v0.2 원본 실행 결과 기록"
 - Consumes: 300 effective public runs, v0.2 rubric, and deterministic checks.
 - Produces: one automatic evaluation per v0.2 run, manual scores, and `gate.json`.
 
-- [ ] **Step 1: Generate deterministic evaluations**
+- [x] **Step 1: Generate deterministic evaluations**
 
 Run automatic checks for all baseline and explicit v0.2 attempts and write one record per composite key to `automatic.jsonl`. Baseline language failures are comparison evidence, not product release failures; baseline must still satisfy execution completeness, configuration consistency, privacy, and non-empty output requirements. All explicit automatic violations enter the release gate.
 
-- [ ] **Step 2: Prepare a mode-blind review worksheet**
+- [x] **Step 2: Prepare a mode-blind review worksheet**
 
 Copy the 200 effective v0.2 outputs into an ignored `.local/evals/v0.2/review/` worksheet with deterministic shuffled `reviewId` values and no mode label. Keep the reviewId-to-composite-key mapping in the same ignored directory. Do not edit raw run files.
 
-- [ ] **Step 3: Score every v0.2 attempt**
+- [x] **Step 3: Score every v0.2 attempt**
 
 For every review ID, record the five 0–2 scores, all boolean failure fields, gold issue totals and corrected counts, and a non-empty rationale. After completing the blind pass, restore `caseId`, `mode`, and `attempt` from the mapping and write `scores/scores.jsonl` in composite-key order.
 
-- [ ] **Step 4: Re-review borderline and hard-failure records**
+- [x] **Step 4: Re-review borderline and hard-failure records**
 
 A second pass reviews every score with any 0 or 1, every boolean failure, every baseline/explicit disagreement, and every repeated-case disagreement. Change a score only with a written rationale; do not hide disagreement by averaging it away.
 
-- [ ] **Step 5: Run the release gate**
+- [x] **Step 5: Run the release gate**
 
 ```powershell
 pnpm eval:v0.2:score -- --manifest evals/cases/v0.2/manifest.json --baseline-runs evals/results/v0.2/baseline/runs.jsonl --explicit-runs evals/results/v0.2/explicit/runs.jsonl --scores evals/results/v0.2/scores/scores.jsonl --v01-regression-runs evals/results/v0.2/v0.1-regression/runs.jsonl --output evals/results/v0.2/gate.json
 ```
 
 Expected before release: `passed: true`, zero hard failures, unnecessary rewrite at most 5%, format adherence at least 95%, gold correction at least 90%, and repeated hard-failure variance 0.
-- [ ] **Step 6: Apply the failure-driven correction loop when the gate fails**
+- [x] **Step 6: Apply the failure-driven correction loop when the gate fails**
 
 For each failure, first strengthen or add the narrowest public regression case. Modify only the responsible core, surface, or domain reference. Use this routing:
 
@@ -1314,7 +1314,7 @@ format failure         -> the relevant surface file
 
 Increment the candidate version to the next `0.2.0-rc.N`, reinstall through the plugin-creator workflow, rerun every explicit v0.2 and v0.1 regression attempt under one configuration, rescore affected records, and rerun the entire gate. Do not add a second generation or judge pass.
 
-- [ ] **Step 7: Run the complete deterministic regression**
+- [x] **Step 7: Run the complete deterministic regression**
 
 ```powershell
 pnpm check
@@ -1324,7 +1324,7 @@ pnpm eval:v0.2:score -- --manifest evals/cases/v0.2/manifest.json --baseline-run
 
 Expected: every command exits 0 and `gate.json` contains `passed: true`.
 
-- [ ] **Step 8: Update the roadmap and commit scores and fixes**
+- [x] **Step 8: Update the roadmap and commit scores and fixes**
 
 Commit a rule fix separately from final scoring when both exist. The final evidence commit is:
 

@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "reasons": [],
+  "average": 9.87,
+  "hardFailures": 0,
+  "unnecessaryRewriteRate": 0,
+  "formatAdherenceRate": 1,
+  "goldCorrectionRate": 1,
+  "repeatedHardFailureVariance": 0
+}

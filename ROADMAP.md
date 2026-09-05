@@ -2,15 +2,15 @@
 
 > **Canonical status document:** This is the single source of truth for implementation progress. Read it before work and update it before ending a session.
 
-**Last updated:** 2026-09-04
+**Last updated:** 2026-09-05
 
 **Current milestone:** v0.2 — Offen-based real-world quality validation
 
-**Detailed progress:** v0.2 implementation tasks 10/12 complete; Tasks 11–12 remain.
+**Detailed progress:** v0.2 implementation tasks 11/12 complete; Task 12 remains.
 
 **V1 outlook:** Milestone 0 is complete, Milestone 1 is in progress, and Milestones 2–5 remain.
 
-**Next task:** Execute Task 11 in `docs/superpowers/plans/2026-09-04-korean-context-v0-2.md`: score results, fix regressions, and pass the gate.
+**Next task:** Execute Task 12 in `docs/superpowers/plans/2026-09-04-korean-context-v0-2.md`: publish the v0.2 prerelease and verify the release lifecycle.
 
 **V1 supported agents:** Codex and Claude Code only
 
@@ -100,18 +100,18 @@ Before session end:
 - [x] Run Codex without Korean Context against the same fixture.
 - [x] Run Codex with explicit Korean Context activation against the same fixture.
 - [x] Run the hardest fixed subset three times in fresh sessions to measure variance.
-- [ ] Score blind to mode where practical and retain raw outputs and rationale.
+- [x] Score blind to mode where practical and retain raw outputs and rationale.
 
 ### 1.4 v0.2 release gate
 
-- [ ] Technical meaning corruption is `0`.
-- [ ] Project-approved terminology violations are `0`.
-- [ ] Assistant-conversation boundary violations are `0`.
-- [ ] Protected identifiers, numbers, commands, and keys are preserved in every case.
-- [ ] Natural-text unnecessary rewrite rate is at most `5%`.
-- [ ] Required output-format adherence is at least `95%`.
-- [ ] At least `90%` of gold awkwardness issues are corrected without a hard failure.
-- [ ] Repeated runs contain no hard-failure variance.
+- [x] Technical meaning corruption is `0`.
+- [x] Project-approved terminology violations are `0`.
+- [x] Assistant-conversation boundary violations are `0`.
+- [x] Protected identifiers, numbers, commands, and keys are preserved in every explicit case.
+- [x] Natural-text unnecessary rewrite rate is at most `5%`.
+- [x] Required output-format adherence is at least `95%`.
+- [x] At least `90%` of gold awkwardness issues are corrected without a hard failure.
+- [x] Repeated runs contain no hard-failure variance.
 - [ ] Publish a reproducible report with limitations and exact agent/model versions.
 - [ ] Publish `v0.2.0` only after every hard gate passes.
 
@@ -191,6 +191,8 @@ git rev-list --left-right --count main...origin/main
 ```
 
 ## Session log
+
+- 2026-09-05 — Completed v0.2 Task 11 on `feat/v0.2-eval-foundation`: isolated Codex memory and the timing-sensitive `paper` MCP server, strengthened failure-driven regressions through `0.2.0-rc.18`, and retained mode-blind scores with written rationale. Final public evidence contains 100 baseline runs, 101 raw/100 effective explicit runs, and 103 raw/100 effective v0.1 regression runs; original timeouts remain in JSONL while successful retries determine the effective records. The gate passed with average 9.87/10, explicit hard failures 0, unnecessary rewrite 0%, format adherence 100%, gold correction 100%, and repeated hard-failure variance 0. `pnpm check` passed with 193 tests, and the repository plus official plugin and skill validators passed. Public inputs are anonymized/synthetic; scoring is manual and the private Offen model audit was not run.
 
 - 2026-09-04 — Completed v0.2 Task 10 on `feat/v0.2-eval-foundation`: built and installed `0.2.0-rc.1`, collected 100 baseline and 100 explicit public runs, and completed 100 effective v0.1 regressions while preserving one timeout retry in 101 raw records. Public model outputs use synthetic fixtures only. Offen local model transmission was not authorized, so the local-only copy and vocabulary scanners were used instead and passed with a clean Linux Git status. Added deterministic stderr path redaction after quarantining the original 301 records under ignored `.local/`; public privacy validation then passed. Full check passed with 181 tests. Next work is Task 11.
 
