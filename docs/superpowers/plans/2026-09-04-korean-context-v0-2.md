@@ -1375,7 +1375,7 @@ git status --short
 
 Also run the current official plugin and skill validators. Expected: all commands exit 0, `gate.json` passes, and only intended release files are changed.
 
-- [ ] **Step 5: Mark v0.2 complete in the roadmap and commit**
+- [x] **Step 5: Mark v0.2 complete in the roadmap and commit**
 
 Check every evidenced Milestone 1 item, set the next milestone to v0.3 Claude Code support, set the next task to current Claude platform research, and add a session-log entry with result paths.
 
@@ -1383,7 +1383,7 @@ Check every evidenced Milestone 1 item, set the next milestone to v0.3 Claude Co
 git add plugins/korean-context/.codex-plugin/plugin.json evals/results/v0.2 README.md docs/support-matrix.md CHANGELOG.md docs/releases/v0.2.0.md ROADMAP.md
 git commit -m "docs(release): v0.2.0 검증 결과 확정"
 ```
-- [ ] **Step 6: Push main and require green remote CI**
+- [x] **Step 6: Push main and require green remote CI**
 
 ```powershell
 git push origin main
@@ -1393,7 +1393,7 @@ gh run watch --repo Jigoooo/korean-context --exit-status
 
 Expected: Windows, macOS, and Linux jobs pass at the release commit. Do not create the tag while a job is pending or failing.
 
-- [ ] **Step 7: Create and verify the GitHub prerelease**
+- [x] **Step 7: Create and verify the GitHub prerelease**
 
 ```powershell
 git tag -a v0.2.0 -m "Korean Context v0.2.0"
@@ -1403,7 +1403,7 @@ gh release view v0.2.0 --repo Jigoooo/korean-context
 ```
 
 Expected: the public prerelease points to the green release commit and displays the checked-in release notes.
-- [ ] **Step 8: Run post-release installation smoke and final readback**
+- [x] **Step 8: Run post-release installation smoke and final readback**
 
 Refresh the GitHub marketplace at tag `v0.2.0`, install the plugin, run one explicit public repair case and one preserve case, then remove and reinstall the plugin.
 

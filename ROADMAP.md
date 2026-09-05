@@ -4,13 +4,13 @@
 
 **Last updated:** 2026-09-05
 
-**Current milestone:** v0.2 — Offen-based real-world quality validation
+**Current milestone:** v0.3 — Claude Code support research
 
-**Detailed progress:** v0.2 implementation tasks 11/12 complete; Task 12 remains.
+**Detailed progress:** v0.2 implementation tasks 12/12 complete; GitHub prerelease `v0.2.0` published.
 
-**V1 outlook:** Milestone 0 is complete, Milestone 1 is in progress, and Milestones 2–5 remain.
+**V1 outlook:** Milestones 0–1 are complete, Milestone 2 is next, and Milestones 3–5 remain.
 
-**Next task:** Execute Task 12 in `docs/superpowers/plans/2026-09-04-korean-context-v0-2.md`: publish the v0.2 prerelease and verify the release lifecycle.
+**Next task:** Research current Claude Code plugin, skill, persistent-instruction, scope, hook, and delegated-agent behavior before implementing Milestone 2.
 
 **V1 supported agents:** Codex and Claude Code only
 
@@ -112,8 +112,8 @@ Before session end:
 - [x] Required output-format adherence is at least `95%`.
 - [x] At least `90%` of gold awkwardness issues are corrected without a hard failure.
 - [x] Repeated runs contain no hard-failure variance.
-- [ ] Publish a reproducible report with limitations and exact agent/model versions.
-- [ ] Publish `v0.2.0` only after every hard gate passes.
+- [x] Publish a reproducible report with limitations and exact agent/model versions.
+- [x] Publish `v0.2.0` only after every hard gate passes.
 
 ## Milestone 2 — v0.3 Claude Code support
 
@@ -191,6 +191,8 @@ git rev-list --left-right --count main...origin/main
 ```
 
 ## Session log
+
+- 2026-09-05 — Completed v0.2 Task 12 and Milestone 1: finalized plugin version `0.2.0`, published the evidence summary and release notes, and verified install, same-version reinstall, remove, absence, final reinstall, and unchanged unrelated plugins. Fast-forwarded `feat/v0.2-eval-foundation` into `main`, pushed commit `b4b5655`, and required green CI run `33948224416` on Windows, macOS, and Ubuntu before creating tag and GitHub prerelease `v0.2.0`. Post-release installation from the GitHub tag passed one repair and one preserve smoke case, then the personal marketplace and final enabled install were restored to `C:\workspace\korean-context`. Next work is current Claude Code platform research for Milestone 2.
 
 - 2026-09-05 — Completed v0.2 Task 11 on `feat/v0.2-eval-foundation`: isolated Codex memory and the timing-sensitive `paper` MCP server, strengthened failure-driven regressions through `0.2.0-rc.18`, and retained mode-blind scores with written rationale. Final public evidence contains 100 baseline runs, 101 raw/100 effective explicit runs, and 103 raw/100 effective v0.1 regression runs; original timeouts remain in JSONL while successful retries determine the effective records. The gate passed with average 9.87/10, explicit hard failures 0, unnecessary rewrite 0%, format adherence 100%, gold correction 100%, and repeated hard-failure variance 0. `pnpm check` passed with 193 tests, and the repository plus official plugin and skill validators passed. Public inputs are anonymized/synthetic; scoring is manual and the private Offen model audit was not run.
 
