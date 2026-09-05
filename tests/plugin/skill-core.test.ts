@@ -45,4 +45,16 @@ describe("Korean Context skill core", () => {
       "스킬 이름, 활성화 여부, 적용하지 않은 이유를 언급하지 않는다.",
     );
   });
+
+  it("rejects stray mixed-script suffixes in Korean output", () => {
+    const naturalness = readFileSync(
+      `${skillRoot}/references/core-naturalness.md`,
+      "utf8",
+    );
+
+    expect(naturalness).toContain(
+      "한국어 낱말 뒤에 요청하지 않은 라틴·그리스·키릴 문자 조각을 붙이지 않는다.",
+    );
+    expect(naturalness).toContain("설정됨reti");
+  });
 });

@@ -114,6 +114,13 @@ describe("v0.2 production corpus", () => {
           item.repeatCount === 1,
       ),
     ).toBe(true);
+
+    const connectionRefused = boundary.find(
+      (item) => item.id === "v02-boundary-004",
+    );
+    expect(connectionRefused?.automaticChecks.forbiddenPatterns).toContain(
+      "[가-힣](?:[A-Za-z]|[\\u0370-\\u03FF]|[\\u0400-\\u04FF])",
+    );
   });
 
   it("passes source, automatic-definition, and public privacy validation", async () => {
@@ -136,4 +143,13 @@ describe("v0.2 production corpus", () => {
       expect(() => validateAutomaticCheckDefinitions(evalCase)).not.toThrow();
     }
   });
+});
+
+it("protects canvas labels in developer status and technical tables", async () => {
+  const { cases } = await loadV02Suite(manifestPath);
+  const status = cases.find((item) => item.id === "v02-long-artifact-002");
+  const table = cases.find((item) => item.id === "v02-long-artifact-007");
+
+  expect(status?.protectedTokens).toEqual(["WebGL", "canvas", "60 FPS"]);
+  expect(table?.protectedTokens).toEqual(["WebGL", "canvas", "Shift", "Esc"]);
 });

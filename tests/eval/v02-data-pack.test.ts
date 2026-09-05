@@ -100,6 +100,38 @@ describe("v0.2 repair and preserve data pack", () => {
       "review",
     ]);
   });
+  it("protects English technical labels in commit repair cases", async () => {
+    const { repair } = await loadDataPack();
+    const canvasCommit = repair.find(
+      (item) => item.id === "v02-real-world-repair-015",
+    );
+
+    expect(canvasCommit?.protectedTokens).toEqual(["sidebar", "canvas"]);
+    expect(canvasCommit?.automaticChecks.requiredSubstrings).toEqual([
+      "sidebar",
+      "canvas",
+    ]);
+  });
+
+  it("distinguishes WebGL context reconnection from creation", async () => {
+    const { repair } = await loadDataPack();
+    const reconnect = repair.find(
+      (item) => item.id === "v02-real-world-repair-010",
+    );
+
+    expect(reconnect?.protectedTokens).toEqual(["canvas", "WebGL", "context"]);
+    expect(reconnect?.automaticChecks.requiredSubstrings).toEqual([
+      "canvas",
+      "WebGL",
+      "context",
+      "연결",
+    ]);
+    expect(reconnect?.automaticChecks.forbiddenSubstrings).toEqual([
+      "물린다",
+      "새 WebGL",
+      "생성",
+    ]);
+  });
 
   it("defines every preserve case as one exact unchanged artifact", async () => {
     const { preserve } = await loadDataPack();
