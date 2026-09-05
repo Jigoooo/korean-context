@@ -4,7 +4,7 @@ Natural Korean for AI-generated artifacts.
 
 Korean Context helps Codex write Korean commits, PRs, reviews, documentation, UI copy, errors, tests, and release notes with context-appropriate wording, terminology, and register.
 
-> v0.1 is a Codex-first prerelease. Explicit invocation is the most reliable path; implicit activation remains beta.
+> v0.2 is a Codex-first prerelease validated with explicit invocation. Implicit activation remains beta based on v0.1 evidence.
 
 ## Roadmap
 
@@ -24,11 +24,9 @@ Current implementation status, the active milestone, and handoff instructions fo
 ## Install from GitHub
 
 ```powershell
-codex plugin marketplace add Jigoooo/korean-context --ref v0.1.0
+codex plugin marketplace add Jigoooo/korean-context --ref v0.2.0
 codex plugin add korean-context@personal
 ```
-
-공개 디렉터리 심사가 끝난 뒤에는 Codex Plugins 화면에서도 설치할 수 있습니다.
 
 ## Usage
 
@@ -40,16 +38,20 @@ Use $korean-context to write a Korean PR body for this change.
 
 자연어로 커밋, PR, 리뷰, 문서, UI 문구 작성을 요청하면 암시적으로 활성화될 수도 있습니다.
 
-## Measured v0.1 result
+## Measured v0.2 result
 
-2026-09-03, `codex-cli 0.147.0`, `gpt-5.6-sol`, 고정된 live 30건 기준:
+2026-09-05, `codex-cli 0.147.0`, `gpt-5.6-sol`, `xhigh`, 공개 고정 세트의 유효 실행 100건 기준:
 
-| Mode     |  Runs | Average | Technical corruption | Boundary violation | Unnecessary rewrite |
-| -------- | ----: | ------: | -------------------: | -----------------: | ------------------: |
-| Explicit | 30/30 | 9.97/10 |                    0 |                  0 |                   0 |
-| Implicit | 30/30 | 9.87/10 |                    0 |                  0 |                   1 |
+| Mode     |    Runs | Average | Hard failure | Protected content | Format | Gold correction |
+| -------- | ------: | ------: | -----------: | ----------------: | -----: | --------------: |
+| Baseline | 100/100 | 9.76/10 |            4 |               97% |   100% |           63/66 |
+| Explicit | 100/100 | 9.87/10 |            0 |              100% |   100% |           66/66 |
 
-강한 baseline보다 명확히 좋아진 repair 사례는 10건 중 4건이었습니다. 결과는 작은 고정 표본에 대한 수동 rubric 평가이며 모델 변동성을 포함합니다. 자세한 원문 결과는 `evals/results/v0.1`에 있습니다.
+쌍별 점수는 explicit이 11건에서 높고, 84건에서 같고, 5건에서 낮았습니다. v0.1 regression도 유효 100/100으로 통과했습니다. 결과는 익명화·합성 고정 표본에 대한 수동 rubric 평가이며 모델 변동성을 포함합니다. 자세한 조건과 제한은 [v0.2 평가 요약](evals/results/v0.2/summary.md)에 있습니다.
+
+### Historical v0.1 result
+
+v0.1의 explicit 30건은 9.97/10, implicit 30건은 9.87/10이었습니다. 자세한 결과는 [v0.1 평가 요약](evals/results/v0.1/summary.md)에 있습니다.
 
 ## Privacy
 
@@ -57,7 +59,7 @@ Use $korean-context to write a Korean PR body for this change.
 
 ## Support
 
-현재 검증된 대상은 Codex CLI 0.147.0과 Codex의 명시적·암시적 스킬 호출입니다. [지원 표](docs/support-matrix.md)와 [알려진 제한](docs/releases/v0.1.0.md)을 확인하세요.
+현재 v0.2에서 검증된 대상은 Codex CLI 0.147.0의 명시적 스킬 호출입니다. [지원 표](docs/support-matrix.md)와 [v0.2 알려진 제한](docs/releases/v0.2.0.md)을 확인하세요.
 
 ## Development
 

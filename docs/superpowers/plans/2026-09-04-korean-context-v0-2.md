@@ -1351,19 +1351,19 @@ git commit -m "test(eval): v0.2 품질 게이트 통과"
 - Consumes: passing `gate.json`, clean public results, and a green release candidate.
 - Produces: final `0.2.0` plugin metadata, public report, GitHub tag, and prerelease.
 
-- [ ] **Step 1: Write the evidence-backed summary**
+- [x] **Step 1: Write the evidence-backed summary**
 
 `evals/results/v0.2/summary.md` reports exact run counts, model and Codex versions, baseline/explicit paired outcomes, five-score averages, every hard-failure count, preservation and format rates, gold correction rate, repeated-case stability, v0.1 regression status, and local audit aggregate counts. State that the public set is anonymized, scoring is manual, outputs vary by model, and local Offen results are not independently reproducible.
 
-- [ ] **Step 2: Update public release documentation**
+- [x] **Step 2: Update public release documentation**
 
 Update README measured results, support matrix date/version, changelog, and `docs/releases/v0.2.0.md`. Do not claim Claude Code support, implicit activation improvement, npm availability, or general quality beyond the fixed evaluation.
 
-- [ ] **Step 3: Finalize plugin version and rerun installation lifecycle**
+- [x] **Step 3: Finalize plugin version and rerun installation lifecycle**
 
 Set the release version to `0.2.0`, validate the plugin and skill, then verify install, same-version reinstall, remove, and final reinstall without changing another plugin or marketplace. Save the sanitized lifecycle evidence under `evals/results/v0.2/install-lifecycle.json` and restore the final installed state.
 
-- [ ] **Step 4: Run every release check**
+- [x] **Step 4: Run every release check**
 
 ```powershell
 pnpm check
